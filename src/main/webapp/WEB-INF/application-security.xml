@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.2.xsd
+
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+    <http auto-config="true" use-expressions="true">
+
+        <!--<remember-me data-source-ref="dataSource" />-->
+
+        <!--<intercept-url pattern="/**" requires-channel="http" />-->
+
+        <!--<port-mappings>-->
+            <!--<port-mapping http="8080" https="8181" />-->
+        <!--</port-mappings>-->
+
+        <intercept-url pattern="/login*" access="permitAll" />
+        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<access-denied-handler error-page="/accessDenied" />-->
+        <!--<intercept-url pattern="/login" access="hasRole('ROLE_ADMIN')"/>-->
+        <!--<intercept-url pattern="/user" access="ROLE_USER" />-->
+        <!--<intercept-url pattern="/info" access="hasRole('ROLE_ADMIN')" />-->
+        <!--<intercept-url pattern="/tutor" access="ROLE_TUTOR" />-->
+
+        <form-login login-page='/login'
+                    authentication-success-handler-ref="urlAuthenticationSuccessHandler"
+                    authentication-failure-url="/login?error=true"
+                    username-parameter="username"
+                    password-parameter="password" />
+
+        <logout logout-success-url="/login?logout" />
+        <csrf />
+    </http>
+
+    <beans:bean id="urlAuthenticationSuccessHandler"
+                class="com.incubator.app.security.UrlAuthenticationSuccessHandler" />
+
+    <beans:bean id="userDetailsServiceImpl" class="com.incubator.app.service.impl.UserDetailsServiceImpl"/>
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder ref="bcrypt" />
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="bcrypt"
+                class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
+
+</beans:beans>
