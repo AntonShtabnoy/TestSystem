@@ -19,23 +19,6 @@ public class UserDaoImpl implements UserDao {
     private final static String FIND_BY_LOGIN = "from User u where login =:login and isDeleted=0";
     private final static String FIND_ALL = " from User u where u.isDeleted =0";
 
-    @Override
-    public void insert(User entity) {            //throws ConstraintViolationException e
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.save(entity);                      //? persist()
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
-    }
-
-    @Override
-    public void update(User entity) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.merge(entity);                     //? update()
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
-    }
 
     @Override
     public void delete(long id) {

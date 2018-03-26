@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TopicService extends GenericService<Topic> {
     List<Topic> findAll();
+    void deleteAll(long []ids);
 }

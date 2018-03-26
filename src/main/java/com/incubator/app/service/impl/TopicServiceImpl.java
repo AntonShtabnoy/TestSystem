@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 public class TopicServiceImpl implements TopicService {
 
+
     @Autowired
     private TopicDao topicDaoImpl;
 
@@ -20,22 +21,27 @@ public class TopicServiceImpl implements TopicService {
     }
 
     @Override
-    public void insert(Topic entity) {
+    public void deleteAll(long[] ids) {
+        topicDaoImpl.deleteAll(ids);
+    }
 
+    @Override
+    public void insert(Topic entity) {
+        topicDaoImpl.insert(entity);
     }
 
     @Override
     public void update(Topic entity) {
-
+        topicDaoImpl.update(entity);
     }
 
     @Override
     public void delete(long id) {
-
+        topicDaoImpl.delete(id);
     }
 
     @Override
     public Topic findById(long id) {
-        return null;
+        return topicDaoImpl.findById(id);
     }
 }

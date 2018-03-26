@@ -21,19 +21,20 @@
         <tbody>
         <tr>
             <th><input type="checkbox" value="${topic.id}" name="topics-check"></th>
-            <th><a href="<c:url value="/admin/${topic.id}"/>">${topic.name}</a></th>
+            <th><a href="<c:url value="/admin/topic/${topic.id}"/>">${topic.name}</a></th>
             <th>${topic.description}</th>
         </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
-<button name="add-topic" type="button" class="btn btn-primary" onclick="window.location.href='/admin/create'">Add</button>
+<button name="add-topic" type="button" class="btn btn-primary" onclick="window.location.href='/admin/topic/create'">Add</button>
 <button id="delete-topic" type="button" class="btn btn-primary">Delete</button>
 
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
+<script src="<c:url value="/resources/js/topic.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>

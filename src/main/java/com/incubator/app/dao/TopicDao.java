@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface TopicDao extends GenericDao<Topic>{
     List<Topic> findAll();
+    void deleteAll(long ids[]);
 }

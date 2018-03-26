@@ -13,26 +13,28 @@ import java.util.List;
 @Repository
 public class TopicDaoImpl implements TopicDao {
     private final static String FIND_ALL = " from Topic t where t.isDeleted =0";
-
-
-    @Override
-    public void insert(Topic entity) {
-
-    }
-
-    @Override
-    public void update(Topic entity) {
-
-    }
+    private final static String DELETE_TOPIC = "update Topic t set t.isDeleted = 1 where t.id=:id";
 
     @Override
     public void delete(long id) {
-
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery(DELETE_TOPIC);
+        query.setParameter("id", id);
+        query.executeUpdate();
+        session.getTransaction().commit();
+        HibernateUtil.shutdown();
     }
 
     @Override
     public Topic findById(long id) {
-        return null;
+        Topic topic = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        topic = (Topic) session.get(Topic.class, id);
+        session.getTransaction().commit();
+        HibernateUtil.shutdown();
+        return topic;
     }
 
     @Override
@@ -45,5 +47,12 @@ public class TopicDaoImpl implements TopicDao {
         session.getTransaction().commit();
         HibernateUtil.shutdown();
         return topics;
+    }
+
+    @Override
+    public void deleteAll(long[] ids) {
+        for (long id: ids) {
+            delete(id);
+        }
     }
 }

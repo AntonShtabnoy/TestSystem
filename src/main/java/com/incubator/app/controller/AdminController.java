@@ -52,6 +52,11 @@ public class AdminController {
         model.addAttribute("user", new User());
         return "create-user";
     }
+    @RequestMapping(value = {"/admin/topic/create"}, method = RequestMethod.GET)
+    public String redirectToCreateTopicPage(Model model){
+        model.addAttribute("topic", new Topic());
+        return "create-topic";
+    }
 
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
     public String registration(@ModelAttribute("user") User user){
@@ -61,6 +66,12 @@ public class AdminController {
         userService.insert(user);
         return "redirect:/admin";
     }
+    @RequestMapping(value = {"/admin/topic/create"}, method = RequestMethod.POST)
+    public String registration(@ModelAttribute("topic") Topic topic){
+        topic.setIsDeleted(0);
+        topicService.insert(topic);
+        return "redirect:/admin/topic";
+    }
 
     @RequestMapping(value = {"/admin/{id}"}, method = RequestMethod.GET)
     public String editUserRedirect(@PathVariable("id") long id, Model model){
@@ -69,23 +80,39 @@ public class AdminController {
         model.addAttribute("user", user);
         return "create-user";
     }
+    @RequestMapping(value = {"/admin/topic/{id}"}, method = RequestMethod.GET)
+    public String editTopicRedirect(@PathVariable("id") long id, Model model){
+        Topic topic = topicService.findById(id);
+        model.addAttribute("topic", topic);
+        return "create-topic";
+    }
 
     @RequestMapping(value = {"/admin/{id}"}, method = RequestMethod.POST)
-    public String editUser(@PathVariable("id") long id, @ModelAttribute("editUser") User editUser){
+    public String editUser(@PathVariable("id") long id, @ModelAttribute("user") User editUser){
         editUser.setId(id);
         editUser.setPassword(encode(editUser.getPassword()));
         editUser.setRole(getRoleByName(editUser.getRole().getName()));
         editUser.setIsDeleted(0);
-        System.out.println(editUser);
         userService.update(editUser);
         return "redirect:/admin";
     }
-
+    @RequestMapping(value = {"/admin/topic/{id}"}, method = RequestMethod.POST)
+    public String editTopic(@PathVariable("id") long id, @ModelAttribute("topic") Topic topic){
+        topic.setId(id);
+        topic.setIsDeleted(0);
+        topicService.update(topic);
+        return "redirect:/admin/topic";
+    }
 
     @RequestMapping(value = {"/admin/{ids}"}, method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("ids") long[] ids){
         userService.deleteSeveralUsers(ids);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+    }
+    @RequestMapping(value = {"/admin/topic/{ids}"}, method = RequestMethod.DELETE)
+    public ResponseEntity deleteTopoics(@PathVariable("ids") long[] ids){
+        topicService.deleteAll(ids);
+        return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = {"/admin/topic"}, method = RequestMethod.GET)
