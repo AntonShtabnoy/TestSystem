@@ -3,13 +3,13 @@
 <html>
 <head>
     <title>Topics</title>
-    <%@ include file="header.jsp" %>
+    <%@ include file="../header.jsp" %>
     <meta name="_csrf" content="${_csrf.token}"/>
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
-<div id="topics_table_container">
-    <table id="topics_table" class="table table-striped table-bordered" style="width:100%">
+<div id="tests_table_container">
+    <table id="tests_table" class="table table-striped table-bordered" style="width:100%">
         <thread>
             <tr>
                 <th><input type="checkbox" id="checkAll"></th>
@@ -17,24 +17,24 @@
                 <th>Description</th>
             </tr>
         </thread>
-        <c:forEach var="topic" items="${topics}">
+        <c:forEach var="test" items="${tests}">
         <tbody>
         <tr>
-            <th><input type="checkbox" value="${topic.id}" name="topics-check"></th>
-            <th><a href="<c:url value="/admin/topics/${topic.id}"/>">${topic.name}</a></th>
-            <th>${topic.description}</th>
+            <th><input type="checkbox" value="${test.id}" name="topics-check"></th>
+            <th><a href="<c:url value="/tutor/tests/${test.id}"/>">${test.name}</a></th>
+            <th>${test.description}</th>
         </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
-<button name="add-topic" type="button" class="btn btn-primary" onclick="window.location.href='/admin/topics/create'">Add</button>
-<button id="delete-topic" type="button" class="btn btn-primary">Delete</button>
+<button name="add-test" type="button" class="btn btn-primary" onclick="window.location.href='/tutor/tests/create'">Add</button>
+<button id="delete-test" type="button" class="btn btn-primary">Delete</button>
 
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
-<script src="<c:url value="/resources/js/topic.js"/>"></script>
+<script src="<c:url value="/resources/js/tests-list.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>

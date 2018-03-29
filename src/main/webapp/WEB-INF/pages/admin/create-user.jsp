@@ -5,7 +5,8 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/create-user.css"/>">
-    <%@ include file="header.jsp" %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <%@ include file="../header.jsp" %>
 </head>
 <body>
 

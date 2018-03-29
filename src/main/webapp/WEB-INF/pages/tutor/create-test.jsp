@@ -5,7 +5,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/create-user.css"/>">
-    <%@ include file="header.jsp" %>
+    <%@ include file="../header.jsp" %>
 </head>
 <body>
 
@@ -30,12 +30,14 @@
                    <div class="cols-sm-10">
                        <div class="input-group">
                            <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                           <form:select path="topic.id" class="form-control">
+                           <form:select path="topic.id" data-live-search="true" id="topicId"
+                                        class="form-control selectpicker">
                            <form:options items="${topics}"/>
                            </form:select>
                        </div>
                    </div>
                </div>
+
 
                 <div class="form-group">
                     <form:label path="name" class="cols-sm-2 control-label">Test</form:label>

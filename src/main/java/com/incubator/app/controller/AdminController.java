@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //@RestController
@@ -42,7 +41,7 @@ public class AdminController {
     public ModelAndView listAllUsers(){
         ModelAndView modelAndView = new ModelAndView();
         List<User> users = userService.findAll();
-        modelAndView.setViewName("admin");
+        modelAndView.setViewName("admin/admin");
         modelAndView.addObject("users", users);
         return modelAndView;
     }
@@ -50,12 +49,12 @@ public class AdminController {
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.GET)
     public String redirectToCreatePage(Model model){
         model.addAttribute("user", new User());
-        return "create-user";
+        return "admin/create-user";
     }
     @RequestMapping(value = {"/admin/topics/create"}, method = RequestMethod.GET)
     public String redirectToCreateTopicPage(Model model){
         model.addAttribute("topic", new Topic());
-        return "create-topic";
+        return "admin/create-topic";
     }
 
     @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
@@ -78,13 +77,13 @@ public class AdminController {
         User user = userService.findById(id);
         user.setPassword("");
         model.addAttribute("user", user);
-        return "create-user";
+        return "admin/create-user";
     }
     @RequestMapping(value = {"/admin/topics/{id}"}, method = RequestMethod.GET)
     public String editTopicRedirect(@PathVariable("id") long id, Model model){
         Topic topic = topicService.findById(id);
         model.addAttribute("topic", topic);
-        return "create-topic";
+        return "admin/create-topic";
     }
 
     @RequestMapping(value = {"/admin/{id}"}, method = RequestMethod.POST)
@@ -120,7 +119,7 @@ public class AdminController {
         ModelAndView modelAndView = new ModelAndView();
         List<Topic> topics = topicService.findAll();
         modelAndView.addObject("topics", topics);
-        modelAndView.setViewName("topic");
+        modelAndView.setViewName("admin/topic");
         return modelAndView;
     }
 

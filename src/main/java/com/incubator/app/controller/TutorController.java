@@ -3,7 +3,6 @@ package com.incubator.app.controller;
 
 import com.incubator.app.entity.Test;
 import com.incubator.app.entity.Topic;
-import com.incubator.app.entity.User;
 import com.incubator.app.service.TestService;
 import com.incubator.app.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,7 +31,7 @@ public class TutorController {
     public ModelAndView listAllTests(){
         ModelAndView modelAndView = new ModelAndView();
         List<Test> tests = testService.findAll();
-        modelAndView.setViewName("tests-list");
+        modelAndView.setViewName("tutor/tests-list");
         modelAndView.addObject("tests", tests);
         return modelAndView;
     }
@@ -47,7 +44,7 @@ public class TutorController {
         Map<Long, String> topicsMap = topics.stream().collect(
                 Collectors.toMap(Topic::getId, Topic::getName));
         model.addAttribute("topics", topicsMap);
-        return "create-test";
+        return "tutor/create-test";
     }
 
     @RequestMapping(value = {"/tutor/tests/create"}, method = RequestMethod.POST)
@@ -62,7 +59,7 @@ public class TutorController {
     public String editTestRedirect(@PathVariable("id") long id, Model model){
         Test test = testService.findById(id);
         model.addAttribute("test", test);
-        return "create-test";
+        return "tutor/create-test";
     }
 
     @RequestMapping(value = {"/tutor/tests/{id}"}, method = RequestMethod.POST)

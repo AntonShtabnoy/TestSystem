@@ -5,7 +5,7 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/create-user.css"/>">
-    <%@ include file="header.jsp" %>
+    <%@ include file="../header.jsp" %>
 </head>
 <body>
 
