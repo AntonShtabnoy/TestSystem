@@ -2,6 +2,7 @@ package com.incubator.app.dao.impl;
 
 import com.incubator.app.dao.UserDao;
 import com.incubator.app.dao.util.HibernateUtil;
+import com.incubator.app.entity.Test;
 import com.incubator.app.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -22,13 +23,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void delete(long id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(DELETE_USER);
-        query.setParameter("id", id);
-        query.executeUpdate();
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
+      ActionDaoUtil.delete(DELETE_USER, id);
     }
 
     @Override
@@ -57,14 +52,8 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        List<User> users = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(FIND_ALL);
-        users = query.list();
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
-        return users;
+        ActionDaoUtil<User> actionDaoUtil = new ActionDaoUtil<>();
+        return actionDaoUtil.findAll(FIND_ALL);
     }
 
     @Override

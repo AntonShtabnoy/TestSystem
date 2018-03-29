@@ -2,6 +2,7 @@ package com.incubator.app.dao.impl;
 
 import com.incubator.app.dao.TopicDao;
 import com.incubator.app.dao.util.HibernateUtil;
+import com.incubator.app.entity.Test;
 import com.incubator.app.entity.Topic;
 import com.incubator.app.entity.User;
 import org.hibernate.Query;
@@ -17,13 +18,7 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public void delete(long id) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(DELETE_TOPIC);
-        query.setParameter("id", id);
-        query.executeUpdate();
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
+      ActionDaoUtil.delete(DELETE_TOPIC, id);
     }
 
     @Override
@@ -39,14 +34,8 @@ public class TopicDaoImpl implements TopicDao {
 
     @Override
     public List<Topic> findAll() {
-        List<Topic> topics = null;
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        Query query = session.createQuery(FIND_ALL);
-        topics = query.list();
-        session.getTransaction().commit();
-        HibernateUtil.shutdown();
-        return topics;
+        ActionDaoUtil<Topic> actionDaoUtil = new ActionDaoUtil<>();
+        return actionDaoUtil.findAll(FIND_ALL);
     }
 
     @Override

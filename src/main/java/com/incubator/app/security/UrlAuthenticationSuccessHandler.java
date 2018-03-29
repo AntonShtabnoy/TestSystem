@@ -51,6 +51,7 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
         System.out.println("redirect");
         boolean isUser = false;
         boolean isAdmin = false;
+        boolean isTutor = false;
         Collection<? extends GrantedAuthority> authorities
                 = authentication.getAuthorities();
         for (GrantedAuthority grantedAuthority : authorities) {
@@ -60,6 +61,9 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
             } else if (grantedAuthority.getAuthority().equals("ROLE_ADMIN")) {
                 isAdmin = true;
                 break;
+            } else if (grantedAuthority.getAuthority().equals("ROLE_TUTOR")) {
+                isTutor = true;
+                break;
             }
         }
 
@@ -67,6 +71,8 @@ public class UrlAuthenticationSuccessHandler implements AuthenticationSuccessHan
             return "/user/";
         } else if (isAdmin) {
             return "/admin/";
+        } else if (isTutor){
+            return "/tutor/";
         } else {
             throw new IllegalStateException();
         }

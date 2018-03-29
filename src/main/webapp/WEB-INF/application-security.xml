@@ -20,7 +20,11 @@
         <!--</port-mappings>-->
 
         <intercept-url pattern="/login*" access="permitAll" />
-        <intercept-url pattern="/**" access="isAuthenticated()" />
+        <!--<intercept-url pattern="/**" access="isAuthenticated()" />-->
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <intercept-url pattern="/user/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/tutor/**" access="hasRole('ROLE_TUTOR')"/>
+
         <!--<access-denied-handler error-page="/accessDenied" />-->
         <!--<intercept-url pattern="/login" access="hasRole('ROLE_ADMIN')"/>-->
         <!--<intercept-url pattern="/user" access="ROLE_USER" />-->

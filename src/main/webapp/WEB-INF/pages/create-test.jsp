@@ -10,12 +10,12 @@
 <body>
 
 <c:choose>
-    <c:when test="${empty topic.name}">
-        <c:set var="formAction" value="/admin/topics/create" />
+    <c:when test="${empty test.name}">
+        <c:set var="formAction" value="/tutor/tests/create" />
         <c:set var="button" value="Add" />
     </c:when>
     <c:otherwise>
-        <c:set var="formAction" value="/admin/topics/${topic.id}" />
+        <c:set var="formAction" value="/tutor/tests/${test.id}" />
         <c:set var="button" value="Edit"/>
     </c:otherwise>
 </c:choose>
@@ -23,13 +23,26 @@
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <form:form method="post" action="${formAction}" modelAttribute="topic">
+            <form:form method="post" action="${formAction}" modelAttribute="test">
+
+               <div class="form-group">
+                   <form:label path="topic" class="cols-sm-2 control-label">Topic</form:label>
+                   <div class="cols-sm-10">
+                       <div class="input-group">
+                           <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                           <form:select path="topic.id" class="form-control">
+                           <form:options items="${topics}"/>
+                           </form:select>
+                       </div>
+                   </div>
+               </div>
+
                 <div class="form-group">
-                    <form:label path="name" class="cols-sm-2 control-label">Topic</form:label>
+                    <form:label path="name" class="cols-sm-2 control-label">Test</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <form:input path="name" class="form-control" name="name" id="name"  placeholder="Enter topic name"/>
+                            <form:input path="name" class="form-control" name="name" id="name"  placeholder="Enter test name"/>
                         </div>
                     </div>
                 </div>
@@ -39,7 +52,7 @@
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <form:textarea path="description" class="form-control" name="description" id="description"  placeholder="Enter topic description"/>
+                            <form:textarea path="description" class="form-control" name="description" id="description"  placeholder="Enter test description"/>
                         </div>
                     </div>
                 </div>

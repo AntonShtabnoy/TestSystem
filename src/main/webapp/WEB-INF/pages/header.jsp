@@ -13,7 +13,7 @@
                 <a class="nav-link" href="<c:url value="/admin"/>">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<c:url value="/admin/topic"/>">Topic</a>
+                <a class="nav-link" href="<c:url value="/admin/topics"/>">Topic</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
