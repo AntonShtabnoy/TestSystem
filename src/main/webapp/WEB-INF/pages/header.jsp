@@ -15,7 +15,7 @@
         <c:when test="${pageContext.request.isUserInRole('ROLE_TUTOR')}">
             <c:set var="nav_li_2" value="Questions"/>
             <c:set var="nav_link_1" value="/tutor"/>
-            <c:set var="nav_link_2" value="/tutor/questions"/>
+            <c:set var="nav_link_2" value="/tutor/questions/0"/>
         </c:when>
         <c:when test="${pageContext.request.isUserInRole('ROLE_USER')}">
             <c:set var="nav_li_2" value="Topic"/>

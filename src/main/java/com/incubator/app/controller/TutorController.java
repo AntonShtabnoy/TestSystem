@@ -12,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -81,16 +84,26 @@ public class TutorController {
         return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = {"/tutor/questions"}, method = RequestMethod.GET)
-    public ModelAndView findListQuestions() {
+    @RequestMapping(value = {"/tutor/questions/{id}"}, method = RequestMethod.GET)
+    public ModelAndView findListQuestions(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
+        //System.out.println(modelAndView.getModel().get("id"));
         List<Test> tests = testService.findAll();
-        Test test = tests.get(0);
-        List<Question> questions = questionService.findByTest(test.getId());
+        if (id == 0) {
+            id = tests.get(0).getId();
+        }
+        List<Question> questions = questionService.findByTest(id);
         modelAndView.addObject("tests", tests);
         modelAndView.addObject("questions", questions);
         modelAndView.setViewName("/tutor/questions-list");
         return modelAndView;
     }
 
+    @RequestMapping(value = {"/tutor/questions/{id}"}, method = RequestMethod.PUT)
+    public ResponseEntity<Question> findQuestionsByTest(@PathVariable("id") long id, Model model) {
+        System.out.println(id);
+        //List<Question> questions = questionService.findByTest(id);
+        model.addAttribute("id", id);
+        return new ResponseEntity<Question>(HttpStatus.OK);
+    }
 }

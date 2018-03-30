@@ -9,9 +9,9 @@
     <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
-<select class="selectpicker" data-style="btn-info" data-live-search="true">
+<select id="pickerId" class="selectpicker" data-style="btn-info" data-live-search="true">
     <c:forEach var="test" items="${tests}">
-        <option>${test.name}</option>
+        <option value="${test.id}">${test.name}</option>
     </c:forEach>
 </select>
 <div id="questions_table_container">
@@ -43,6 +43,7 @@
 <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.min.js"/>"></script>
+<script src="<c:url value="/resources/js/tutor-questions.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>
