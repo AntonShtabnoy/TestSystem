@@ -37,5 +37,8 @@ public class Question {
     @OneToMany(mappedBy = "question")
     private Set<Statistic> statistics = new HashSet<>();
 
+    @Column(name = "isDeleted", columnDefinition = "bit")
+    private Integer isDeleted;
+
 
 }

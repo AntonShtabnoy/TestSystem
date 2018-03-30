@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public class TestDaoImpl implements TestDao {
-    private final static String FIND_ALL = " from Test t where t.isDeleted =0";
+    private final static String FIND_ALL = "from Test t where t.isDeleted =0";
     private final static String DELETE_TOPIC = "update Test t set t.isDeleted = 1 where t.id=:id";
 
     @Override

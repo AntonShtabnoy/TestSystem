@@ -56,10 +56,4 @@ public class UserDaoImpl implements UserDao {
         return actionDaoUtil.findAll(FIND_ALL);
     }
 
-    @Override
-    public void deleteSeveralUsers(long[] ids) {
-        for (long id: ids) {
-            delete(id);
-        }
-    }
 }

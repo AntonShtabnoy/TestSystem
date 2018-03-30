@@ -1,8 +1,10 @@
 package com.incubator.app.controller;
 
 
+import com.incubator.app.entity.Question;
 import com.incubator.app.entity.Test;
 import com.incubator.app.entity.Topic;
+import com.incubator.app.service.QuestionService;
 import com.incubator.app.service.TestService;
 import com.incubator.app.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class TutorController {
 
     @Autowired
     private TopicService topicService;
+
+    @Autowired
+    private QuestionService questionService;
 
 
     @RequestMapping(value = {"/tutor"}, method = RequestMethod.GET)
@@ -76,5 +81,16 @@ public class TutorController {
         return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
     }
 
+    @RequestMapping(value = {"/tutor/questions"}, method = RequestMethod.GET)
+    public ModelAndView findListQuestions() {
+        ModelAndView modelAndView = new ModelAndView();
+        List<Test> tests = testService.findAll();
+        Test test = tests.get(0);
+        List<Question> questions = questionService.findByTest(test.getId());
+        modelAndView.addObject("tests", tests);
+        modelAndView.addObject("questions", questions);
+        modelAndView.setViewName("/tutor/questions-list");
+        return modelAndView;
+    }
 
 }

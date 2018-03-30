@@ -105,7 +105,7 @@ public class AdminController {
 
     @RequestMapping(value = {"/admin/{ids}"}, method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("ids") long[] ids){
-        userService.deleteSeveralUsers(ids);
+        userService.deleteAll(ids);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
     @RequestMapping(value = {"/admin/topics/{ids}"}, method = RequestMethod.DELETE)

@@ -25,6 +25,7 @@ CREATE TABLE `question` (
   `questionId` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `description` varchar(400) CHARACTER SET latin1 NOT NULL,
   `testId` int(10) unsigned NOT NULL,
+  `isDeleted` bit(1) NOT NULL,
   PRIMARY KEY (`questionId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

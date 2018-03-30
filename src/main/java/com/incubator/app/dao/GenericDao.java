@@ -18,6 +18,15 @@ public interface GenericDao<T> {
        session.getTransaction().commit();
        HibernateUtil.shutdown();
    };
+
+    default void deleteAll(long[] ids) {
+        for (long id : ids) {
+            delete(id);
+        }
+    }
+
+    ;
+
     void delete(long id);
     T findById(long id);
 }
