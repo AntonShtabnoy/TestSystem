@@ -9,18 +9,18 @@
     <c:choose>
         <c:when test="${pageContext.request.isUserInRole('ROLE_ADMIN')}">
             <c:set var="nav_li_2" value="Topic"/>
-            <c:set var="nav_link_1" value="/admin"/>
+            <c:set var="nav_link_1" value="/admin/"/>
             <c:set var="nav_link_2" value="/admin/topics"/>
         </c:when>
         <c:when test="${pageContext.request.isUserInRole('ROLE_TUTOR')}">
             <c:set var="nav_li_2" value="Questions"/>
-            <c:set var="nav_link_1" value="/tutor"/>
+            <c:set var="nav_link_1" value="/tutor/"/>
             <c:set var="nav_link_2" value="/tutor/questions/0"/>
         </c:when>
         <c:when test="${pageContext.request.isUserInRole('ROLE_USER')}">
             <c:set var="nav_li_2" value="Topic"/>
-            <c:set var="nav_link_1" value="/user"/>
-            <c:set var="nav_link_2" value="/user"/>
+            <c:set var="nav_link_1" value="/user/"/>
+            <c:set var="nav_link_2" value="/user/"/>
         </c:when>
     </c:choose>
     <nav class="navbar navbar-default">

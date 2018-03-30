@@ -35,7 +35,7 @@
     </table>
 </div>
 <button name="add-question" type="button" class="btn btn-primary"
-        onclick="window.location.href='/tutor/questions/create'">Add
+        onclick="addURL()">Add
 </button>
 <button id="delete-question" type="button" class="btn btn-primary">Delete</button>
 

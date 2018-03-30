@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/tutor")
 public class TutorController {
 
     @Autowired
@@ -35,7 +36,7 @@ public class TutorController {
     private QuestionService questionService;
 
 
-    @RequestMapping(value = {"/tutor"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public ModelAndView listAllTests(){
         ModelAndView modelAndView = new ModelAndView();
         List<Test> tests = testService.findAll();
@@ -45,7 +46,7 @@ public class TutorController {
     }
 
 
-    @RequestMapping(value = {"/tutor/tests/create"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/tests/create"}, method = RequestMethod.GET)
     public String redirectToCreateTestPage(Model model){
         model.addAttribute("test", new Test());
         List<Topic> topics = topicService.findAll();
@@ -55,7 +56,7 @@ public class TutorController {
         return "tutor/create-test";
     }
 
-    @RequestMapping(value = {"/tutor/tests/create"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/tests/create"}, method = RequestMethod.POST)
     public String addTest(@ModelAttribute("test") Test test){
         System.out.println(test);
         test.setTopic(topicService.findById(test.getTopic().getId()));
@@ -63,14 +64,15 @@ public class TutorController {
         testService.insert(test);
         return "redirect:/tutor";
     }
-    @RequestMapping(value = {"/tutor/tests/{id}"}, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/tests/{id}"}, method = RequestMethod.GET)
     public String editTestRedirect(@PathVariable("id") long id, Model model){
         Test test = testService.findById(id);
         model.addAttribute("test", test);
         return "tutor/create-test";
     }
 
-    @RequestMapping(value = {"/tutor/tests/{id}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/tests/{id}"}, method = RequestMethod.POST)
     public String editTest(@PathVariable("id") long id, @ModelAttribute("test") Test test){
         test.setId(id);
         test.setIsDeleted(0);
@@ -78,13 +80,13 @@ public class TutorController {
         return "redirect:/admin/tests";
     }
 
-    @RequestMapping(value = {"/tutor/tests/{ids}"}, method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/tests/{ids}"}, method = RequestMethod.DELETE)
     public ResponseEntity deleteTests(@PathVariable("ids") long[] ids){
         testService.deleteAll(ids);
         return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = {"/tutor/questions/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/questions/{id}"}, method = RequestMethod.GET)
     public ModelAndView findListQuestions(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
         //System.out.println(modelAndView.getModel().get("id"));
@@ -99,11 +101,14 @@ public class TutorController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/tutor/questions/{id}"}, method = RequestMethod.PUT)
-    public ResponseEntity<Question> findQuestionsByTest(@PathVariable("id") long id, Model model) {
-        System.out.println(id);
-        //List<Question> questions = questionService.findByTest(id);
-        model.addAttribute("id", id);
+    @RequestMapping(value = {"/questions/{id}"}, method = RequestMethod.PUT)
+    public ResponseEntity<Question> findQuestionsByTest(@PathVariable("id") long id) {
         return new ResponseEntity<Question>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.GET)
+    public String createQuestion(@PathVariable("id") long id) {
+        System.out.println(id);
+        return "/tutor/create-question";
     }
 }
