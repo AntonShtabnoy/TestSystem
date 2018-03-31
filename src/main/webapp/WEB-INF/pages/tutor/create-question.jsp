@@ -3,6 +3,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/create-user.css"/>">
     <%@ include file="../header.jsp" %>
 </head>
@@ -22,13 +23,13 @@
 <div class="container">
     <div class="row main">
         <div class="main-login main-center">
-            <form method="post" action="${formAction}" modelAttribute="test">
+            <form method="post" action="${formAction}" id="formId">
                 <div class="form-group">
                     <label for="description" class="cols-sm-2 control-label">Question</label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" id="description">
+                            <textarea rows="2" class="form-control" id="description"> </textarea>
                         </div>
                     </div>
                 </div>
@@ -44,35 +45,57 @@
                         </div>
                     </div>
                 </div>
+                <label for="type" class="cols-sm-2 control-label">Answers</label>
                 <div class="form-group">
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="radio" id="radio1" aria-label="Radio button for following text input">
-                                </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="radio" value="0" name="radio-group"
+                                           aria-label="Checkbox for following text input">
+                                </span>
+                                <textarea rows="2" name="text_answer" class="form-control"
+                                          aria-label="Text input with checkbox"></textarea>
                             </div>
-                            <input type="text" id="answer1" class="form-control"
-                                   aria-label="Text input with radio button">
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="radio" value="1" name="radio-group"
+                                           aria-label="Checkbox for following text input">
+                                </span>
+                                <textarea rows="2" name="text_answer" class="form-control"
+                                          aria-label="Text input with checkbox"></textarea>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <input type="radio" name="radio-group" value="2"
+                                           aria-label="Checkbox for following text input">
+                                </span>
+                                <textarea rows="2" name="text_answer" class="form-control"
+                                          aria-label="Text input with checkbox"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="cols-sm-10">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <div class="input-group-text">
-                                    <input type="radio" id="radio2" aria-label="Radio button for following text input">
-                                </div>
-                            </div>
-                            <input type="text" id="answer2" class="form-control"
-                                   aria-label="Text input with radio button">
+                    <button id="add_answer" style="color: #229eae">Add answer</button>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="cols-sm-2 control-label">Literature</label>
+                            <textarea id="literature" rows="1" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <label class="cols-sm-2 control-label">Links</label>
+                            <textarea id="link" rows="1" class="form-control"></textarea>
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group ">
-                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" value="${button}">
+                    <input type="button" class="btn btn-primary btn-lg btn-block login-button" id="nextId"
+                           value="${button}">
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

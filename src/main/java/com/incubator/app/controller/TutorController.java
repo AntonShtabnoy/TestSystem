@@ -103,12 +103,18 @@ public class TutorController {
 
     @RequestMapping(value = {"/questions/{id}"}, method = RequestMethod.PUT)
     public ResponseEntity<Question> findQuestionsByTest(@PathVariable("id") long id) {
-        return new ResponseEntity<Question>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.GET)
     public String createQuestion(@PathVariable("id") long id) {
         System.out.println(id);
         return "/tutor/create-question";
+    }
+
+    @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.POST)
+    public ResponseEntity<Question> saveQuestion(@PathVariable("id") long id) {
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
