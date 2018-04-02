@@ -2,7 +2,7 @@ $(document).ready(function () {
     let wrapper = $(".col-lg-12");
     let add_button = $("#add_answer");
     var radioIndex = 3;
-    console.log(radioIndex);
+
 
     function addAnswer() {
         return '<div class="input-group">\n' +
@@ -19,19 +19,17 @@ $(document).ready(function () {
         radioIndex++;
     });
 
-    let map = {};
+    let map = [];
     let radioMap = [];
     let i = 0, j = 0;
     let type, description, literature, link;
     $('#nextId').click(function () {
-        map = {};
-        radioMap = {};
+        map = [];
         radioMap = [];
         i = 0;
         j = 0;
         $("textarea[name='text_answer']").each(function () {
-            map[i] = $(this).val();
-            i++;
+            map.push($(this).val());
         });
         if ($('#type').val() === 'single') {
             radioMap.push($("input[name='radio-group']:checked", '#formId').val());
@@ -46,33 +44,51 @@ $(document).ready(function () {
         literature = $('#literature').val();
         link = $('#link').val();
 
-
         let data = {
             "answers": map, "correct": radioMap, "description": description, "literature": literature,
             "link": link
         };
-        var siteCode;
-        $(function () {
-            siteCode = getLastPartOfUrl(window.location.href);
-        });
 
-        var getLastPartOfUrl = function ($url) {
-            let url = $url;
-            let urlsplit = url.split("/");
+        function getLastPartOfUrl($url) {
+            let path = $url;
+            let urlsplit = path.split("/");
             let lastPart = urlsplit[urlsplit.length - 1];
             if (lastPart === '') {
                 lastPart = urlsplit[urlsplit.length - 2];
             }
             return lastPart;
         };
+        let siteCode = getLastPartOfUrl(window.location.href);
+        console.log(siteCode);
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
+
         $.ajax({
-            url: '/tutor/questions/create' + siteCode,
-            method: "post",
+            url: '/tutor/questions/create/' + siteCode,
+            type: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(data),
             success: function () {
-                console.log("All were sent")
+                console.log("All were sent");
+                $("input[name='radio-group']", '#formId').each(function () {
+                    $(this).prop('checked', false);
+                });
+                $("textarea[name='text_answer']").val('');
+                $('#type').val('single');
+                $('#description').val('');
+                $('#literature').val('');
+                $('#link').val('');
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                console.log(xhr.status);
             }
         });
         console.log(description);
@@ -81,6 +97,9 @@ $(document).ready(function () {
         console.log(radioMap);
     });
 
+    $('#finishId').click(function () {
+        location.href = "/tutor/questions/0";
+    });
     $('#type').change(function () {
         if ($('#type').val() === 'single') {
             $(':checkbox').attr('type', 'radio');

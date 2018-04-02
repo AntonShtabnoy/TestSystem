@@ -5,6 +5,8 @@
     <title>Title</title>
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/bootstrap.css"/>">
     <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/create-user.css"/>">
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <%@ include file="../header.jsp" %>
 </head>
 <body>
@@ -12,7 +14,7 @@
 <c:choose>
     <c:when test="${empty test.name}">
         <c:set var="formAction" value="/tutor/tests/create"/>
-        <c:set var="button" value="Add"/>
+        <c:set var="button" value="Add question"/>
     </c:when>
     <c:otherwise>
         <c:set var="formAction" value="/tutor/tests/${test.id}"/>
@@ -94,8 +96,16 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <input type="button" class="btn btn-primary btn-lg btn-block login-button" id="nextId"
-                           value="${button}">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="button" class="btn btn-primary btn-lg btn-block login-button" id="finishId"
+                                   value="Finish">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="button" class="btn btn-primary btn-lg btn-block login-button" id="nextId"
+                                   value="${button}">
+                        </div>
+                    </div>
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>

@@ -4,6 +4,7 @@ package com.incubator.app.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -12,7 +13,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = {"answers", "literatureList"})
+@ToString(exclude = {"answers", "literatureList"})
 @Table(name = "question")
 public class Question {
 
@@ -28,10 +30,10 @@ public class Question {
     @JoinColumn(name = "testId", nullable = false)
     private Test test;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private Set<Literature> literatureList = new HashSet<>();
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL)
     private Set<Answer> answers = new HashSet<>();
 
     @OneToMany(mappedBy = "question")

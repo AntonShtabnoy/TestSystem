@@ -1,25 +1,24 @@
 package com.incubator.app.controller;
 
 
-import com.incubator.app.entity.Question;
-import com.incubator.app.entity.Test;
-import com.incubator.app.entity.Topic;
+import com.incubator.app.dto.QuestionDTO;
+import com.incubator.app.entity.*;
 import com.incubator.app.service.QuestionService;
 import com.incubator.app.service.TestService;
 import com.incubator.app.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -58,7 +57,6 @@ public class TutorController {
 
     @RequestMapping(value = {"/tests/create"}, method = RequestMethod.POST)
     public String addTest(@ModelAttribute("test") Test test){
-        System.out.println(test);
         test.setTopic(topicService.findById(test.getTopic().getId()));
         test.setIsDeleted(0);
         testService.insert(test);
@@ -108,13 +106,48 @@ public class TutorController {
 
     @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.GET)
     public String createQuestion(@PathVariable("id") long id) {
-        System.out.println(id);
+        //System.out.println(id);
         return "/tutor/create-question";
     }
 
-    @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.POST)
-    public ResponseEntity<Question> saveQuestion(@PathVariable("id") long id) {
-
-        return new ResponseEntity<>(HttpStatus.OK);
+    @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    String saveQuestion(@PathVariable("id") long id, @RequestBody QuestionDTO name) {
+        Question question = new Question();
+        Test test = new Test();
+        Answer answer = new Answer();
+        test.setId(id);
+        question.setTest(test);
+        Set<Answer> answers = new HashSet<>();
+        Set<Literature> literature = new HashSet<>();
+        Set<Link> links = new HashSet<>();
+        Literature lit = new Literature();
+        Link link = new Link();
+        link.setLink(name.getLink());
+        link.setLiterature(lit);
+        links.add(link);
+        lit.setQuestion(question);
+        lit.setDescription(name.getLiterature());
+        lit.setLinks(links);
+        literature.add(lit);
+        for (int i = 0; i < name.getAnswers().size(); i++) {
+            answer = new Answer();
+            answer.setDescription(name.getAnswers().get(i));
+            answer.setIsCorrect(0);
+            if (i < name.getCorrect().size()) {
+                if (Integer.valueOf(name.getCorrect().get(i)) == i) {
+                    answer.setIsCorrect(1);
+                }
+            }
+            answer.setQuestion(question);
+            answers.add(answer);
+        }
+        question.setDescription(name.getDescription());
+        question.setAnswers(answers);
+        question.setIsDeleted(0);
+        question.setLiteratureList(literature);
+        System.out.println(question);
+        questionService.insert(question);
+        return "{\"msg\":\"success\"}";
     }
 }
