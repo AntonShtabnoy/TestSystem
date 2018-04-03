@@ -17,20 +17,28 @@
         <div class="span4">
             <img style="float:left; margin-left: 25%" src="<c:url value="/resources/image/image1.png"/>"/>
         </div>
-        <div class="user-main container">
-            <select class="selectpicker" data-style="btn-info" data-live-search="true">
-                <c:forEach var="topic" items="${topics}">
-                    <option>${topic.name}</option>
-                </c:forEach>
-            </select>
-            <div class="row">
-                <select class="selectpicker" data-style="btn-info" data-live-search="true">
-                    <c:forEach var="test" items="${tests}">
-                        <option>${test.name}</option>
+        <form method="post" action="/user/tests" id="formId">
+            <div class="user-main container">
+                <select class="selectpicker" name="topic" data-style="btn-info" data-live-search="true">
+                    <c:forEach var="topic" items="${topics}">
+                        <option value="${topic.id}">${topic.name}</option>
                     </c:forEach>
                 </select>
+                <div class="row">
+                    <select class="selectpicker" name="test" data-style="btn-info" data-live-search="true">
+                        <c:forEach var="test" items="${tests}">
+                            <option value="${test.id}">${test.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="row">
+                    <input type="submit" class="btn btn-primary btn-lg btn-block login-button" id="runId"
+                           value="Start test">
+                </div>
             </div>
-        </div>
+            <input type="hidden" name="${_csrf.parameterName}"
+                   value="${_csrf.token}"/>
+        </form>
     </div>
 </div>
 

@@ -13,8 +13,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
-@ToString
+@EqualsAndHashCode(exclude = "tests")
+@ToString(exclude = "tests")
 @Table(name = "topic")
 public class Topic {
     @Id

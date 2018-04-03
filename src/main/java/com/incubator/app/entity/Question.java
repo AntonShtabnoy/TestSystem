@@ -13,8 +13,8 @@ import java.util.Set;
 @Entity
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = {"answers", "literatureList"})
-@ToString(exclude = {"answers", "literatureList"})
+@EqualsAndHashCode(exclude = {"answers", "literatureList", "statistics"})
+@ToString(exclude = {"answers", "literatureList", "statistics"})
 @Table(name = "question")
 public class Question {
 

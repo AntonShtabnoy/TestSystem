@@ -26,6 +26,9 @@
 //    @Autowired
 //    private QuestionDao questionDao;
 //
+//    @Autowired
+//    private AnswerDao answerDao;
+//
 //
 ////    @Test
 ////    public void findByLoginTest(){
@@ -83,23 +86,32 @@
 ////
 ////        Assert.assertEquals(expectedUser, userDaoImpl.findById(1L));
 ////    }
-//    @Test
-//    public void insertQuestion(){
-//        Question question = new Question();
-//        question.setDescription("KIU");
-//        question.setIsDeleted(0);
-//        com.incubator.app.entity.Test test = new com.incubator.app.entity.Test();
-//        test.setId(1);
-//        question.setTest(test);
-//        Set<Literature> literatureSet = new HashSet<>();
-//        Literature literature = new Literature();
-//        literature.setQuestion(question);
-//        literature.setDescription("L");
-//        literatureSet.add(literature);
-//        question.setLiteratureList(literatureSet);
-//        questionDao.insert(question);
-//    }
+////    @Test
+////    public void insertQuestion(){
+////        Question question = new Question();
+////        question.setDescription("KIU");
+////        question.setIsDeleted(0);
+////        com.incubator.app.entity.Test test = new com.incubator.app.entity.Test();
+////        test.setId(1);
+////        question.setTest(test);
+////        Set<Literature> literatureSet = new HashSet<>();
+////        Literature literature = new Literature();
+////        literature.setQuestion(question);
+////        literature.setDescription("L");
+////        literatureSet.add(literature);
+////        question.setLiteratureList(literatureSet);
+////        questionDao.insert(question);
+////    }
+////
+////    @Test
+////    public void findQuestionByTopicAndTest(){
+////        questionDao.findByTopicAndTest(1,1,5);
+////    }
 //
+//    @Test
+//    public void isCorrect(){
+//        System.out.println(answerDao.isCorrect(1));
+//    }
 //
 //}
 //

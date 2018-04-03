@@ -3,7 +3,6 @@ $(document).ready(function () {
     let add_button = $("#add_answer");
     var radioIndex = 3;
 
-
     function addAnswer() {
         return '<div class="input-group">\n' +
             '<span class="input-group-addon">\n' +

@@ -40,6 +40,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByLogin(String login) {
+        return userDao.findByLogin(login);
+    }
+
+    @Override
     public void deleteAll(long[] ids) {
         userDao.deleteAll(ids);
     }
