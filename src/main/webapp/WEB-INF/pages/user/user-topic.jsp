@@ -19,23 +19,23 @@
         </div>
         <form method="post" action="/user/tests" id="formId">
             <div class="user-main container">
-                <select class="selectpicker" name="topic" data-style="btn-info" data-live-search="true">
+                <select class="selectpicker" name="topic" id="topicId" data-style="btn-info" data-live-search="true">
                     <c:forEach var="topic" items="${topics}">
                         <option value="${topic.id}">${topic.name}</option>
                     </c:forEach>
                 </select>
-                <div class="row">
-                    <select class="selectpicker" name="test" data-style="btn-info" data-live-search="true">
+                <div id="tests_container">
+                    <select class="selectpicker" name="test" id="testsId" data-style="btn-info" data-live-search="true">
                         <c:forEach var="test" items="${tests}">
                             <option value="${test.id}">${test.name}</option>
                         </c:forEach>
                     </select>
                 </div>
+                </div>
                 <div class="row">
                     <input type="submit" class="btn btn-primary btn-lg btn-block login-button" id="runId"
                            value="Start test">
                 </div>
-            </div>
             <input type="hidden" name="${_csrf.parameterName}"
                    value="${_csrf.token}"/>
         </form>
@@ -46,6 +46,7 @@
 <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.min.js"/>"></script>
+<script src="<c:url value="/resources/js/user/user-topic.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>

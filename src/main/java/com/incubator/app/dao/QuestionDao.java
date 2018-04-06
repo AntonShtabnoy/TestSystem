@@ -8,5 +8,7 @@ public interface QuestionDao extends GenericDao<Question> {
     List<Question> findAll();
     List<Question> findByTest(long testId);
 
-    Question findByTopicAndTest(long topicId, long testId, long questionId);
+    Question findNextQuestionByTest(long testId, long questionId);
+
+    long countQuestionsInTest(long testId);
 }

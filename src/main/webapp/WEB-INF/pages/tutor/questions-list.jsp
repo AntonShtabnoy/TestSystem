@@ -43,7 +43,7 @@
 <script src="<c:url value="/resources/js/jquery.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap-select.min.js"/>"></script>
-<script src="<c:url value="/resources/js/tutor-questions.js"/>"></script>
+<script src="<c:url value="/resources/js/tutor/tutor-questions.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>

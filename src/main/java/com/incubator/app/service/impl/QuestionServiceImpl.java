@@ -21,8 +21,13 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question findByTopicAndTest(long topicId, long testId, long questionId) {
-        return questionDao.findByTopicAndTest(topicId, testId, questionId);
+    public long countQuestionsInTest(long testId) {
+        return questionDao.countQuestionsInTest(testId);
+    }
+
+    @Override
+    public Question findNextQuestionByTest(long testId, long questionId) {
+        return questionDao.findNextQuestionByTest(testId, questionId);
     }
 
     @Override

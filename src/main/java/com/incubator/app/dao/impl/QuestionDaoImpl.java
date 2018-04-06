@@ -8,6 +8,8 @@ import com.incubator.app.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Projection;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
 
@@ -18,10 +20,6 @@ public class QuestionDaoImpl implements QuestionDao {
     private final static String FIND_ALL = "from Question q where q.isDeleted =0";
     private final static String FIND_BY_TEST = "from Question q where q.test.id=:id";
     private final static String DELETE_QUESTION = "update Question q set q.isDeleted = 1 where q.id=:id";
-    private final static String FIND_BY_TOPIC_AND_TEST =
-            //"select q.id, q.description, q.test, q.answers " +
-            "from Question q " +
-                    "inner join q.test.topic t where q.test.id=:testId and q.id=:questionId and t.id=:topicId and q.isDeleted=0";
 
 
     @Override
@@ -44,24 +42,29 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public Question findByTopicAndTest(long topicId, long testId, long questionId) {
+    public Question findNextQuestionByTest(long testId, long questionId) {
         Question question = null;
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        Criteria criteria = session.createCriteria(Question.class).add(Restrictions.eq("test.id", testId)).
-                add(Restrictions.eq("id", questionId)).createAlias("test", "t").createAlias("t.topic", "tt").
-                add(Restrictions.eq("tt.id", topicId));
-//        Query query = session.createQuery(FIND_BY_TOPIC_AND_TEST);
-//        query.setParameter("testId", testId);
-//        query.setParameter("questionId", questionId);
-//        query.setParameter("topicId", topicId);
-//        question = (Question) query.uniqueResult();
+        Criteria criteria = session.createCriteria(Question.class).add(Restrictions.eq("test.id", testId))
+                .setFirstResult((int) questionId).setMaxResults(1);
         question = (Question) criteria.uniqueResult();
-        System.out.println(question.getAnswers());
-        System.out.println(question);
         session.getTransaction().commit();
         HibernateUtil.shutdown();
         return question;
+    }
+
+    @Override
+    public long countQuestionsInTest(long testId) {
+        long amount = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Criteria criteria = session.createCriteria(Question.class).add(Restrictions.eq("test.id", testId))
+                .setProjection(Projections.rowCount());
+        amount = (long) criteria.uniqueResult();
+        session.getTransaction().commit();
+        HibernateUtil.shutdown();
+        return amount;
     }
 
     @Override

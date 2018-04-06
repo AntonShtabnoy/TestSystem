@@ -34,7 +34,7 @@
 
 <script src="<c:url value="/resources/js/jquery-3.3.1.js"/>"></script>
 <script src="<c:url value="/resources/js/bootstrap.js"/>"></script>
-<script src="<c:url value="/resources/js/topic.js"/>"></script>
+<script src="<c:url value="/resources/js/admin/topic.js"/>"></script>
 <script src="<c:url value="/resources/js/header.js"/>"></script>
 </body>
 </html>

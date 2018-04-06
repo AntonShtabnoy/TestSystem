@@ -20,8 +20,18 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public List<Test> findALlByTopic(long topicId) {
+        return testDaoImpl.findAllByTopic(topicId);
+    }
+
+    @Override
     public void deleteAll(long[] ids) {
         testDaoImpl.deleteAll(ids);
+    }
+
+    @Override
+    public Long countQuestionsInTest(long testId) {
+        return testDaoImpl.countQuestionsInTest(testId);
     }
 
     @Override

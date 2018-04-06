@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -20,17 +21,17 @@ public class Statistic {
     private long id;
 
     @Column(name = "date")
-    //@Temporal(TemporalType.DATE)
-    private LocalDate date;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
 
     @Column(name = "isCorrect")
     private Integer isCorrect;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "questionId")
     private Question question;
 }

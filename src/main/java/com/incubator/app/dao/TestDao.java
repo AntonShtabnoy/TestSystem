@@ -6,4 +6,8 @@ import java.util.List;
 
 public interface TestDao extends GenericDao<Test> {
     List<Test> findAll();
+
+    List<Test> findAllByTopic(long topicId);
+
+    Long countQuestionsInTest(long testId);
 }

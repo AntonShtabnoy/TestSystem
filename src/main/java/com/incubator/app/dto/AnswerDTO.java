@@ -5,12 +5,14 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 public class AnswerDTO {
-    private List<String> answers;
+    private HashMap<String, List<String>> answers;
 }
