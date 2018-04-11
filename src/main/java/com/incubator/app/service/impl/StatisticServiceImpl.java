@@ -57,6 +57,11 @@ public class StatisticServiceImpl implements StatisticService {
     }
 
     @Override
+    public List<Object[]> adminUserStatistics() {
+        return statisticDao.adminUserStatistics();
+    }
+
+    @Override
     public List<Object[]> tutorTestStatistics() {
         return statisticDao.tutorTestStatistics();
     }
@@ -64,5 +69,10 @@ public class StatisticServiceImpl implements StatisticService {
     @Override
     public List<Object[]> tutorQuestionStatistics() {
         return statisticDao.tutorQuestionStatistics();
+    }
+
+    @Override
+    public List<Object[]> tutorUserStatistics() {
+        return statisticDao.tutorUserStatistics();
     }
 }

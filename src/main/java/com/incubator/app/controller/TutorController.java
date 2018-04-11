@@ -78,8 +78,9 @@ public class TutorController {
     public String editTest(@PathVariable("id") long id, @ModelAttribute("test") Test test){
         test.setId(id);
         test.setIsDeleted(0);
+        test.setTopic(testService.findById(id).getTopic());
         testService.update(test);
-        return "redirect:/admin/tests";
+        return "redirect:/tutor/";
     }
 
     @RequestMapping(value = {"/tests/{ids}"}, method = RequestMethod.DELETE)
@@ -162,6 +163,7 @@ public class TutorController {
         modelAndView.setViewName("tutor/tutor-statistics");
         modelAndView.addObject("testStatistics", statisticService.tutorTestStatistics());
         modelAndView.addObject("questionStatistics", statisticService.tutorQuestionStatistics());
+        modelAndView.addObject("userStatistics", statisticService.tutorUserStatistics());
         return modelAndView;
     }
 }

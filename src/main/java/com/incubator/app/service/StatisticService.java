@@ -15,7 +15,11 @@ public interface StatisticService extends GenericService<Statistic> {
 
     List<Object[]> adminQuestionStatistics();
 
+    List<Object[]> adminUserStatistics();
+
     List<Object[]> tutorTestStatistics();
 
     List<Object[]> tutorQuestionStatistics();
+
+    List<Object[]> tutorUserStatistics();
 }

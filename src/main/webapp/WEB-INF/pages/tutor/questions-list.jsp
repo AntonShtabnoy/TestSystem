@@ -28,7 +28,11 @@
         <tr>
             <th><input type="checkbox" value="${question.id}" name="topics-check"></th>
             <th><a href="<c:url value="/tutor/questions/${question.id}"/>">${question.description}</a></th>
-            <th>${question.description}</th>
+            <th>
+                <c:forEach var="answer" items="${question.answers}">
+                    ${answer.description};
+                </c:forEach>
+            </th>
         </tr>
         </c:forEach>
         </tbody>

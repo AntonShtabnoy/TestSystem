@@ -4,6 +4,7 @@ import com.incubator.app.dao.AnswerDao;
 import com.incubator.app.dto.AnswerDTO;
 import com.incubator.app.entity.*;
 import com.incubator.app.service.*;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 import sun.util.resources.LocaleData;
 
@@ -69,7 +71,7 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/tests"}, method = RequestMethod.POST)
-    public ModelAndView startTest(@RequestParam("test") String test, @RequestParam("topic") String topic) {
+    public ModelAndView startTest(@RequestParam("test") String test) {
         String type = "radio";
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/user/user-test");
@@ -86,8 +88,8 @@ public class UserController {
 
     @RequestMapping(value = {"/questions"}, method = RequestMethod.POST)
     public @ResponseBody
-    String getResult(@RequestBody AnswerDTO answerDTO, Principal principal) {
-        System.out.println(answerDTO.getAnswers());
+    String getResult(@RequestBody AnswerDTO answerDTO, Principal principal, HttpSession session) {
+        List<Question> wrongQuestions = new ArrayList<>();
         Statistic statistic = null;
         Question currentQuestion = null;
         Boolean isCorrect = null;
@@ -99,31 +101,17 @@ public class UserController {
             statistic = new Statistic();
             if (isCorrect) {
                 statistic.setIsCorrect(1);
-            } else statistic.setIsCorrect(0);
+            } else {
+                statistic.setIsCorrect(0);
+                wrongQuestions.add(currentQuestion);
+            }
             statistic.setQuestion(currentQuestion);
             statistic.setUser(user);
             statisticService.insert(statistic);
         }
+        session.setAttribute("wrongQuestions", wrongQuestions);
         return "{\"msg\":\"success\"}";
     }
-
-//    @RequestMapping(value = {"/tests/{id}"}, method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public @ResponseBody
-//    String acceptAnswer(@RequestBody AnswerDTO answerDTO, @PathVariable("id") long id, Principal principal) {
-//        Statistic statistic = new Statistic();
-//        User user = userService.findByLogin(principal.getName());
-//        Date date = new Date();
-//        Question question = questionService.findById(id);
-//        statistic.setUser(user);
-//        statistic.setQuestion(question);
-//        statistic.setDate(date);
-////        Boolean isCorrect = isCorrectAnswers(answerDTO.getAnswers(), question.getAnswers());
-////        if (isCorrect) {
-////            statistic.setIsCorrect(1);
-////        } else statistic.setIsCorrect(0);
-////        statisticService.insert(statistic);
-//        return "{\"msg\":\"success\"}";
-//    }
 
     @RequestMapping(value = {"/questions/{id}"}, method = RequestMethod.GET)
     public ModelAndView nextQuestion(@PathVariable("id") long id, HttpSession session) {
@@ -131,7 +119,6 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
         Question previousQuestion = (Question) session.getAttribute("question");
         long amount = questionService.countQuestionsInTest(previousQuestion.getTest().getId());
-        if (id < amount) {
             Question question = questionService.findNextQuestionByTest(previousQuestion.getTest().getId(), id);
             modelAndView.addObject("question", question);
             modelAndView.setViewName("/user/user-test");
@@ -140,18 +127,16 @@ public class UserController {
                 type = "checkbox";
             }
             modelAndView.addObject("type", type);
-        } else {
-
-        }
         return modelAndView;
     }
 
     @RequestMapping(value = {"/statistics"}, method = RequestMethod.GET)
     public ModelAndView showStatistics(HttpSession session, Principal principal) {
-        Question question = (Question) session.getAttribute("question");
-        User user = userService.findByLogin(principal.getName());
+        //Question question = (Question) session.getAttribute("question");
+        //User user = userService.findByLogin(principal.getName());
         ModelAndView modelAndView = new ModelAndView();
-        List<Question> questions = statisticService.findWrongAnswers(question.getTest().getId(), user.getId(), new Date());
+        //List<Question> questions = statisticService.findWrongAnswers(question.getTest().getId(), user.getId(), new Date());
+        List<Question> questions = (List<Question>) session.getAttribute("wrongQuestions");
         modelAndView.addObject("wrongQuestions", questions);
         modelAndView.setViewName("/user/user-statistics");
         return modelAndView;

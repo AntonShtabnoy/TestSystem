@@ -69,7 +69,7 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach var="stat" items="${questionStatistics}">
+            <c:forEach var="stat" items="${userStatistics}">
                 <tr>
                     <td>${stat[0]}</td>
                     <td>${stat[1]}</td>

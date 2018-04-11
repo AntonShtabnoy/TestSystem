@@ -13,9 +13,13 @@ public interface StatisticDao extends GenericDao<Statistic> {
 
     List<Object[]> adminTestStatistics();
 
+    List<Object[]> adminUserStatistics();
+
     List<Object[]> adminQuestionStatistics();
 
     List<Object[]> tutorTestStatistics();
 
     List<Object[]> tutorQuestionStatistics();
+
+    List<Object[]> tutorUserStatistics();
 }

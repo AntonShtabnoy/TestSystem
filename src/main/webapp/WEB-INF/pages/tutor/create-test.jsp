@@ -25,19 +25,20 @@
         <div class="main-login main-center">
             <form:form method="post" action="${formAction}" modelAttribute="test">
 
-               <div class="form-group">
-                   <form:label path="topic" class="cols-sm-2 control-label">Topic</form:label>
-                   <div class="cols-sm-10">
-                       <div class="input-group">
-                           <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                           <form:select path="topic.id" data-live-search="true" id="topicId"
-                                        class="form-control selectpicker">
-                           <form:options items="${topics}"/>
-                           </form:select>
-                       </div>
-                   </div>
-               </div>
-
+                <c:if test="${empty test.name}">
+                    <div class="form-group">
+                        <form:label path="topic" class="cols-sm-2 control-label">Topic</form:label>
+                        <div class="cols-sm-10">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                <form:select path="topic.id" data-live-search="true" id="topicId"
+                                             class="form-control selectpicker">
+                                    <form:options items="${topics}"/>
+                                </form:select>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
 
                 <div class="form-group">
                     <form:label path="name" class="cols-sm-2 control-label">Test</form:label>

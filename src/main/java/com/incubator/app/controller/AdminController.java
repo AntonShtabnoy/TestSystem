@@ -137,6 +137,7 @@ public class AdminController {
         modelAndView.setViewName("admin/admin-statistics");
         modelAndView.addObject("testStatistics", statisticService.adminTestStatistics());
         modelAndView.addObject("questionStatistics", statisticService.adminQuestionStatistics());
+        modelAndView.addObject("userStatistics", statisticService.adminUserStatistics());
         return modelAndView;
     }
 

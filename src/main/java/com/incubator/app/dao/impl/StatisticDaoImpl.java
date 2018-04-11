@@ -21,8 +21,10 @@ public class StatisticDaoImpl implements StatisticDao {
     private final static String USER_STATISTIC = "CALL user_statistics(:id)";
     private final static String ADMIN_TEST_STATISTICS = "CALL admin_test_statistics()";
     private final static String ADMIN_QUESTION_STATISTICS = "CALL admin_question_statistics()";
+    private final static String ADMIN_USER_STATISTICS = "CALL admin_user_statistics()";
     private final static String TUTOR_TEST_STATISTICS = "CALL tutor_test_statistics()";
     private final static String TUTOR_QUESTION_STATISTICS = "CALL tutor_question_statistics()";
+    private final static String TUTOR_USER_STATISTICS = "CALL tutor_user_statistics()";
 
     @Override
     public void insert(Statistic entity) {
@@ -92,6 +94,11 @@ public class StatisticDaoImpl implements StatisticDao {
     }
 
     @Override
+    public List<Object[]> adminUserStatistics() {
+        return statistics(ADMIN_USER_STATISTICS);
+    }
+
+    @Override
     public List<Object[]> adminQuestionStatistics() {
         return statistics(ADMIN_QUESTION_STATISTICS);
     }
@@ -104,6 +111,11 @@ public class StatisticDaoImpl implements StatisticDao {
     @Override
     public List<Object[]> tutorQuestionStatistics() {
         return statistics(TUTOR_QUESTION_STATISTICS);
+    }
+
+    @Override
+    public List<Object[]> tutorUserStatistics() {
+        return statistics(TUTOR_USER_STATISTICS);
     }
 
 
