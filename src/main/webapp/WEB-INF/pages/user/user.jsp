@@ -17,7 +17,7 @@
         </div>
         <div class="user-main">
             <h3><a href="<c:url value="/user/topics"/>">Choose topic and test</a></h3>
-            <h3>Personal statistics</h3>
+            <h3><a href="<c:url value="/user/stat"/>">Personal statistics</a></h3>
         </div>
     </div>
 </div>

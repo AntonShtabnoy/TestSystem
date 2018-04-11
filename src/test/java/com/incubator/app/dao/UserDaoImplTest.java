@@ -134,8 +134,8 @@ public class UserDaoImplTest {
 
     @Test
     public void findWrongQuestions() {
-        System.out.println(statisticDao.findWrongAnswers(1, 2, new java.util.Date()));
-
+        //System.out.println(statisticDao.findWrongAnswers(1, 2, new java.util.Date()));
+        System.out.println(statisticDao.userStatistic(2).get(0)[0]);
     }
 }
 

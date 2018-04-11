@@ -5,6 +5,11 @@ $(document).ready(function () {
     var map = {};
     let count = $('#count').val();
     $(document).on("click", "#nextId", function () {
+        $("input[name='radio-group']:checked").each(function () {
+            radioMap.push($(this).val());
+        });
+        map[$('#questionId').val()] = radioMap;
+        radioMap = [];
         if (indexOfQuestion >= count) {
             let answers = {"answers": map};
             console.log(answers);
@@ -27,12 +32,6 @@ $(document).ready(function () {
                 }
             });
         }
-        radioMap = [];
-        $("input[name='radio-group']:checked").each(function () {
-            radioMap.push($(this).val());
-        });
-        map[$('#questionId').val()] = radioMap;
-        radioMap = [];
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         $(document).ajaxSend(function (e, xhr, options) {
@@ -61,7 +60,6 @@ $(document).ready(function () {
         console.log(map);
     });
     $(document).on("click", "#finishId", function () {
-
         let answers = {"answers": map};
         console.log(answers);
         $.ajax({

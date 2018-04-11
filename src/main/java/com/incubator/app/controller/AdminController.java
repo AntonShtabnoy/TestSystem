@@ -4,6 +4,7 @@ package com.incubator.app.controller;
 import com.incubator.app.entity.Role;
 import com.incubator.app.entity.Topic;
 import com.incubator.app.entity.User;
+import com.incubator.app.service.StatisticService;
 import com.incubator.app.service.TopicService;
 import com.incubator.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,15 @@ import java.util.List;
 
 //@RestController
 @Controller
+@RequestMapping("/admin")
 public class AdminController {
 
     @Autowired
     private UserService userService;
     @Autowired
     private TopicService topicService;
+    @Autowired
+    private StatisticService statisticService;
 
 
 //    @RequestMapping(value = {"/admin/"}, method = RequestMethod.GET)
@@ -37,7 +41,7 @@ public class AdminController {
 //        return new ResponseEntity<>(users, HttpStatus.OK);
 //    }
 
-    @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
+    @RequestMapping(value = {""}, method = RequestMethod.GET)
     public ModelAndView listAllUsers(){
         ModelAndView modelAndView = new ModelAndView();
         List<User> users = userService.findAll();
@@ -46,18 +50,19 @@ public class AdminController {
         return modelAndView;
     }
 
-    @RequestMapping(value = {"/admin/create"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/create"}, method = RequestMethod.GET)
     public String redirectToCreatePage(Model model){
         model.addAttribute("user", new User());
         return "admin/create-user";
     }
-    @RequestMapping(value = {"/admin/topics/create"}, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/topics/create"}, method = RequestMethod.GET)
     public String redirectToCreateTopicPage(Model model){
         model.addAttribute("topic", new Topic());
         return "admin/create-topic";
     }
 
-    @RequestMapping(value = {"/admin/create"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/create"}, method = RequestMethod.POST)
     public String registration(@ModelAttribute("user") User user){
         user.setPassword(encode(user.getPassword()));
         user.setRole(getRoleByName(user.getRole().getName()));
@@ -65,37 +70,39 @@ public class AdminController {
         userService.insert(user);
         return "redirect:/admin";
     }
-    @RequestMapping(value = {"/admin/topics/create"}, method = RequestMethod.POST)
+
+    @RequestMapping(value = {"/topics/create"}, method = RequestMethod.POST)
     public String registration(@ModelAttribute("topic") Topic topic){
         topic.setIsDeleted(0);
         topicService.insert(topic);
         return "redirect:/admin/topics";
     }
 
-    @RequestMapping(value = {"/admin/{id}"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/{id}"}, method = RequestMethod.GET)
     public String editUserRedirect(@PathVariable("id") long id, Model model){
         User user = userService.findById(id);
-        user.setPassword("");
         model.addAttribute("user", user);
         return "admin/create-user";
     }
-    @RequestMapping(value = {"/admin/topics/{id}"}, method = RequestMethod.GET)
+
+    @RequestMapping(value = {"/topics/{id}"}, method = RequestMethod.GET)
     public String editTopicRedirect(@PathVariable("id") long id, Model model){
         Topic topic = topicService.findById(id);
         model.addAttribute("topic", topic);
         return "admin/create-topic";
     }
 
-    @RequestMapping(value = {"/admin/{id}"}, method = RequestMethod.POST)
+    @RequestMapping(value = {"/{id}"}, method = RequestMethod.POST)
     public String editUser(@PathVariable("id") long id, @ModelAttribute("user") User editUser){
         editUser.setId(id);
-        editUser.setPassword(encode(editUser.getPassword()));
+        editUser.setPassword(userService.findById(id).getPassword());
         editUser.setRole(getRoleByName(editUser.getRole().getName()));
         editUser.setIsDeleted(0);
         userService.update(editUser);
         return "redirect:/admin";
     }
-    @RequestMapping(value = {"/admin/topics/{id}"}, method = RequestMethod.POST)
+
+    @RequestMapping(value = {"/topics/{id}"}, method = RequestMethod.POST)
     public String editTopic(@PathVariable("id") long id, @ModelAttribute("topic") Topic topic){
         topic.setId(id);
         topic.setIsDeleted(0);
@@ -103,23 +110,33 @@ public class AdminController {
         return "redirect:/admin/topics";
     }
 
-    @RequestMapping(value = {"/admin/{ids}"}, method = RequestMethod.DELETE)
+    @RequestMapping(value = {"/{ids}"}, method = RequestMethod.DELETE)
     public ResponseEntity delete(@PathVariable("ids") long[] ids){
         userService.deleteAll(ids);
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
-    @RequestMapping(value = {"/admin/topics/{ids}"}, method = RequestMethod.DELETE)
+
+    @RequestMapping(value = {"/topics/{ids}"}, method = RequestMethod.DELETE)
     public ResponseEntity deleteTopoics(@PathVariable("ids") long[] ids){
         topicService.deleteAll(ids);
         return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = {"/admin/topics"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/topics"}, method = RequestMethod.GET)
     public ModelAndView getTopic(){
         ModelAndView modelAndView = new ModelAndView();
         List<Topic> topics = topicService.findAll();
         modelAndView.addObject("topics", topics);
         modelAndView.setViewName("admin/topic");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/statistics"})
+    public ModelAndView adminStatistics() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("admin/admin-statistics");
+        modelAndView.addObject("testStatistics", statisticService.adminTestStatistics());
+        modelAndView.addObject("questionStatistics", statisticService.adminQuestionStatistics());
         return modelAndView;
     }
 

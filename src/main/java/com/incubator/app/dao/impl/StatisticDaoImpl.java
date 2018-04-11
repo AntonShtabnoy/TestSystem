@@ -4,8 +4,8 @@ import com.incubator.app.dao.StatisticDao;
 import com.incubator.app.dao.util.HibernateUtil;
 import com.incubator.app.entity.Question;
 import com.incubator.app.entity.Statistic;
-import com.incubator.app.entity.Test;
 import org.hibernate.Criteria;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -17,8 +17,12 @@ import java.util.List;
 @Repository
 public class StatisticDaoImpl implements StatisticDao {
 
-    //   private static final String L ="select question from Statistic s inner ;
 
+    private final static String USER_STATISTIC = "CALL user_statistics(:id)";
+    private final static String ADMIN_TEST_STATISTICS = "CALL admin_test_statistics()";
+    private final static String ADMIN_QUESTION_STATISTICS = "CALL admin_question_statistics()";
+    private final static String TUTOR_TEST_STATISTICS = "CALL tutor_test_statistics()";
+    private final static String TUTOR_QUESTION_STATISTICS = "CALL tutor_question_statistics()";
 
     @Override
     public void insert(Statistic entity) {
@@ -67,5 +71,50 @@ public class StatisticDaoImpl implements StatisticDao {
         session.getTransaction().commit();
         HibernateUtil.shutdown();
         return wrongQuestions;
+    }
+
+    @Override
+    public List<Object[]> userStatistic(long id) {
+        List<Object[]> statistic = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        SQLQuery query = session.createSQLQuery(USER_STATISTIC);
+        query.setParameter("id", id);
+        statistic = query.list();
+        session.getTransaction().commit();
+        HibernateUtil.shutdown();
+        return statistic;
+    }
+
+    @Override
+    public List<Object[]> adminTestStatistics() {
+        return statistics(ADMIN_TEST_STATISTICS);
+    }
+
+    @Override
+    public List<Object[]> adminQuestionStatistics() {
+        return statistics(ADMIN_QUESTION_STATISTICS);
+    }
+
+    @Override
+    public List<Object[]> tutorTestStatistics() {
+        return statistics(TUTOR_TEST_STATISTICS);
+    }
+
+    @Override
+    public List<Object[]> tutorQuestionStatistics() {
+        return statistics(TUTOR_QUESTION_STATISTICS);
+    }
+
+
+    private List<Object[]> statistics(String procedure) {
+        List<Object[]> statistic = null;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        SQLQuery query = session.createSQLQuery(procedure);
+        statistic = query.list();
+        session.getTransaction().commit();
+        HibernateUtil.shutdown();
+        return statistic;
     }
 }

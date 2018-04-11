@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @Controller
-@SessionAttributes({"topic", "test", "question", "topics"})
+@SessionAttributes({"topic", "test", "question", "topics", "countQuestions"})
 @RequestMapping("/user")
 public class UserController {
 
@@ -147,9 +147,23 @@ public class UserController {
     }
 
     @RequestMapping(value = {"/statistics"}, method = RequestMethod.GET)
-    public String showStatistics(HttpSession session) {
-        System.out.println(session.getAttribute("question"));
-        return "/user/user-statistics";
+    public ModelAndView showStatistics(HttpSession session, Principal principal) {
+        Question question = (Question) session.getAttribute("question");
+        User user = userService.findByLogin(principal.getName());
+        ModelAndView modelAndView = new ModelAndView();
+        List<Question> questions = statisticService.findWrongAnswers(question.getTest().getId(), user.getId(), new Date());
+        modelAndView.addObject("wrongQuestions", questions);
+        modelAndView.setViewName("/user/user-statistics");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = {"/stat"}, method = RequestMethod.GET)
+    public ModelAndView showPersonalStatistics(Principal principal) {
+        ModelAndView modelAndView = new ModelAndView();
+        User user = userService.findByLogin(principal.getName());
+        modelAndView.addObject("statistics", statisticService.userStatistic(user.getId()));
+        modelAndView.setViewName("/user/user-stat");
+        return modelAndView;
     }
 
 

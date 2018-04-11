@@ -4,6 +4,7 @@ package com.incubator.app.controller;
 import com.incubator.app.dto.QuestionDTO;
 import com.incubator.app.entity.*;
 import com.incubator.app.service.QuestionService;
+import com.incubator.app.service.StatisticService;
 import com.incubator.app.service.TestService;
 import com.incubator.app.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class TutorController {
     @Autowired
     private QuestionService questionService;
 
+    @Autowired
+    private StatisticService statisticService;
+
 
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public ModelAndView listAllTests(){
@@ -60,7 +64,7 @@ public class TutorController {
         test.setTopic(topicService.findById(test.getTopic().getId()));
         test.setIsDeleted(0);
         testService.insert(test);
-        return "redirect:/tutor";
+        return "redirect:/tutor/";
     }
 
     @RequestMapping(value = {"/tests/{id}"}, method = RequestMethod.GET)
@@ -149,5 +153,15 @@ public class TutorController {
         System.out.println(question);
         questionService.insert(question);
         return "{\"msg\":\"success\"}";
+    }
+
+
+    @RequestMapping(value = {"/statistics"})
+    public ModelAndView adminStatistics() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("tutor/tutor-statistics");
+        modelAndView.addObject("testStatistics", statisticService.tutorTestStatistics());
+        modelAndView.addObject("questionStatistics", statisticService.tutorQuestionStatistics());
+        return modelAndView;
     }
 }
