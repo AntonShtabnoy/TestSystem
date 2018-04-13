@@ -89,6 +89,8 @@ public class UserController {
     @RequestMapping(value = {"/questions"}, method = RequestMethod.POST)
     public @ResponseBody
     String getResult(@RequestBody AnswerDTO answerDTO, Principal principal, HttpSession session) {
+        Question sessionQuestion = (Question) session.getAttribute("question");
+        List<Question> allQuestionsInTest = questionService.findByTest(sessionQuestion.getTest().getId());
         List<Question> wrongQuestions = new ArrayList<>();
         Statistic statistic = null;
         Question currentQuestion = null;
@@ -99,6 +101,7 @@ public class UserController {
             currentQuestion = questionService.findById(Long.valueOf(key));
             isCorrect = isCorrectAnswers(map.get(key), currentQuestion.getAnswers());
             statistic = new Statistic();
+            allQuestionsInTest.remove(currentQuestion);
             if (isCorrect) {
                 statistic.setIsCorrect(1);
             } else {
@@ -108,6 +111,10 @@ public class UserController {
             statistic.setQuestion(currentQuestion);
             statistic.setUser(user);
             statisticService.insert(statistic);
+        }
+        if (allQuestionsInTest.size() > 0) {
+            insertWrongQuestionWithoutAnswers(allQuestionsInTest, user);
+            wrongQuestions.addAll(allQuestionsInTest);
         }
         session.setAttribute("wrongQuestions", wrongQuestions);
         return "{\"msg\":\"success\"}";
@@ -132,11 +139,9 @@ public class UserController {
 
     @RequestMapping(value = {"/statistics"}, method = RequestMethod.GET)
     public ModelAndView showStatistics(HttpSession session, Principal principal) {
-        //Question question = (Question) session.getAttribute("question");
-        //User user = userService.findByLogin(principal.getName());
         ModelAndView modelAndView = new ModelAndView();
-        //List<Question> questions = statisticService.findWrongAnswers(question.getTest().getId(), user.getId(), new Date());
         List<Question> questions = (List<Question>) session.getAttribute("wrongQuestions");
+        System.out.println(questions.size());
         modelAndView.addObject("wrongQuestions", questions);
         modelAndView.setViewName("/user/user-statistics");
         return modelAndView;
@@ -168,6 +173,17 @@ public class UserController {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void insertWrongQuestionWithoutAnswers(List<Question> questions, User user) {
+        Statistic statistic = null;
+        for (Question q : questions) {
+            statistic = new Statistic();
+            statistic.setIsCorrect(0);
+            statistic.setQuestion(q);
+            statistic.setUser(user);
+            statisticService.insert(statistic);
         }
     }
 }

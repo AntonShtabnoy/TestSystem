@@ -60,6 +60,11 @@ $(document).ready(function () {
         console.log(map);
     });
     $(document).on("click", "#finishId", function () {
+        $("input[name='radio-group']:checked").each(function () {
+            radioMap.push($(this).val());
+        });
+        map[$('#questionId').val()] = radioMap;
+        radioMap = [];
         let answers = {"answers": map};
         console.log(answers);
         $.ajax({

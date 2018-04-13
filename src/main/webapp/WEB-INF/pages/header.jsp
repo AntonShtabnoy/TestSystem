@@ -24,11 +24,11 @@
         <c:when test="${pageContext.request.isUserInRole('ROLE_USER')}">
             <c:set var="nav_li_2" value="Topic"/>
             <c:set var="nav_link_1" value="/user/"/>
-            <c:set var="nav_link_2" value="/user/"/>
+            <c:set var="nav_link_2" value="/user/topics"/>
         </c:when>
     </c:choose>
     <nav class="navbar navbar-default">
-        <a href="<c:url value="/admin/"/>" class="navbar-left"><img
+        <a href="<c:url value="${nav_link_1}"/>" class="navbar-left"><img
                 src="<c:url value="/resources/image/testsyst.png"/>"></a>
         <ul class="nav navbar-nav navbar-left">
             <li class="nav-item active">
