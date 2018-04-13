@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `test_system` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `test_system`;
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: test_system
@@ -33,7 +31,7 @@ CREATE TABLE `answer` (
   UNIQUE KEY `answerId_UNIQUE` (`answerId`),
   KEY `questionId_idx` (`questionId`),
   CONSTRAINT `question_id` FOREIGN KEY (`questionId`) REFERENCES `question` (`questionId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,7 +40,7 @@ CREATE TABLE `answer` (
 
 LOCK TABLES `answer` WRITE;
 /*!40000 ALTER TABLE `answer` DISABLE KEYS */;
-INSERT INTO `answer` VALUES (1,'C','\0',5),(2,'B','\0',5),(3,'A','',5),(13,'extends','',14),(14,'don\'t know','\0',14),(15,'callable','',14),(16,'opera','\0',15),(17,'mozila','\0',15),(18,'google','',15);
+INSERT INTO `answer` VALUES (1,'C','\0',5),(2,'B','\0',5),(3,'A','',5),(13,'extends','',14),(14,'don\'t know','\0',14),(15,'callable','',14),(16,'opera','\0',15),(17,'mozila','\0',15),(18,'google','',15),(19,'cat','\0',17),(20,'final','\0',17),(21,'try','',17),(22,'Nothing','\0',18),(23,'trouble','\0',18),(24,'Speed','',18),(25,'z','\0',19),(26,'q','',19),(27,'a','',19);
 /*!40000 ALTER TABLE `answer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -61,7 +59,7 @@ CREATE TABLE `link` (
   UNIQUE KEY `linkId_UNIQUE` (`linkId`),
   KEY `literatureId_idx` (`literatureId`),
   CONSTRAINT `literatureId` FOREIGN KEY (`literatureId`) REFERENCES `literature` (`literatureId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +68,7 @@ CREATE TABLE `link` (
 
 LOCK TABLES `link` WRITE;
 /*!40000 ALTER TABLE `link` DISABLE KEYS */;
-INSERT INTO `link` VALUES (1,'Thread links',2),(2,'kjh',3);
+INSERT INTO `link` VALUES (1,'Thread links',2),(2,'kjh',3),(3,'hj',2),(4,'vbnm',4),(5,'https://tproger.ru/articles/localstorage/',5),(6,'https://tproger.ru/articles/localstorage/',6);
 /*!40000 ALTER TABLE `link` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -89,7 +87,7 @@ CREATE TABLE `literature` (
   UNIQUE KEY `literatureId_UNIQUE` (`literatureId`),
   KEY `question_Id_idx` (`questionId`),
   CONSTRAINT `id_question` FOREIGN KEY (`questionId`) REFERENCES `question` (`questionId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +96,7 @@ CREATE TABLE `literature` (
 
 LOCK TABLES `literature` WRITE;
 /*!40000 ALTER TABLE `literature` DISABLE KEYS */;
-INSERT INTO `literature` VALUES (2,'Thread book',14),(3,'lkjh',15);
+INSERT INTO `literature` VALUES (2,'Thread book',14),(3,'lkjh',15),(4,'dfghj',17),(5,'qwertyui',18),(6,'zxcvbnm,',19);
 /*!40000 ALTER TABLE `literature` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -115,7 +113,7 @@ CREATE TABLE `question` (
   `testId` int(10) unsigned NOT NULL,
   `isDeleted` bit(1) NOT NULL,
   PRIMARY KEY (`questionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -124,7 +122,7 @@ CREATE TABLE `question` (
 
 LOCK TABLES `question` WRITE;
 /*!40000 ALTER TABLE `question` DISABLE KEYS */;
-INSERT INTO `question` VALUES (5,' How',1,'\0'),(14,' How does work Thread?',1,'\0'),(15,' How does Internet work?',1,'\0');
+INSERT INTO `question` VALUES (5,' How',1,'\0'),(14,' How does work Thread?',1,'\0'),(15,' How does Internet work?',1,'\0'),(16,'P',2,'\0'),(17,' Exception',3,'\0'),(18,' Statement',4,'\0'),(19,'PrepareStatment',4,'\0');
 /*!40000 ALTER TABLE `question` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -170,7 +168,7 @@ CREATE TABLE `statistic` (
   KEY `questionId_idx` (`questionId`),
   CONSTRAINT `questionId` FOREIGN KEY (`questionId`) REFERENCES `question` (`questionId`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `userId` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,7 +177,7 @@ CREATE TABLE `statistic` (
 
 LOCK TABLES `statistic` WRITE;
 /*!40000 ALTER TABLE `statistic` DISABLE KEYS */;
-INSERT INTO `statistic` VALUES (26,'2018-04-06 11:00:21','\0',14,2),(27,'2018-04-06 11:00:21','',5,2),(28,'2018-04-05 22:45:39','',5,2),(29,'2018-04-05 23:06:05','',5,2),(30,'2018-04-05 23:11:25','',5,2);
+INSERT INTO `statistic` VALUES (26,'2018-04-06 11:00:21','\0',14,2),(27,'2018-04-06 11:00:21','',5,2),(28,'2018-04-05 22:45:39','',5,2),(29,'2018-04-05 23:06:05','',5,2),(30,'2018-04-05 23:11:25','',5,2),(31,'2018-04-09 18:43:38','',14,2),(32,'2018-04-09 18:43:39','\0',5,2),(33,'2018-04-09 19:31:10','\0',5,2),(34,'2018-04-09 19:38:12','',14,2),(35,'2018-04-09 19:38:12','',15,2),(36,'2018-04-09 19:38:12','',5,2),(37,'2018-04-09 19:49:40','\0',14,2),(38,'2018-04-09 19:49:40','',15,2),(39,'2018-04-09 19:49:40','\0',5,2),(40,'2018-04-09 20:50:51','\0',14,2),(41,'2018-04-09 20:50:51','\0',15,2),(42,'2018-04-09 20:50:51','\0',5,2),(43,'2018-04-09 20:58:47','\0',14,2),(44,'2018-04-09 20:58:48','',15,2),(45,'2018-04-09 20:58:48','\0',5,2),(46,'2018-04-09 21:01:56','\0',14,2),(47,'2018-04-09 21:01:56','\0',15,2),(48,'2018-04-09 21:01:56','',5,2),(49,'2018-04-11 05:27:08','',16,2),(50,'2018-04-11 08:34:46','\0',16,8),(51,'2018-04-11 11:26:36','',17,11),(52,'2018-04-11 11:27:16','\0',17,11),(53,'2018-04-11 11:31:32','\0',17,11),(54,'2018-04-11 11:40:33','\0',17,11),(55,'2018-04-11 20:37:50','\0',17,11),(56,'2018-04-11 21:30:11','\0',17,11),(57,'2018-04-11 21:30:55','',17,11),(58,'2018-04-11 21:30:55','',17,11),(59,'2018-04-11 21:35:57','',17,11),(60,'2018-04-11 21:37:38','\0',17,11),(61,'2018-04-11 21:38:08','',17,11),(62,'2018-04-11 21:42:15','',17,11),(63,'2018-04-11 21:43:53','',17,11),(64,'2018-04-11 21:55:54','\0',17,11),(65,'2018-04-11 21:58:16','',17,11),(66,'2018-04-11 21:58:32','\0',17,11),(67,'2018-04-11 21:59:01','',17,11),(68,'2018-04-13 09:31:34','',5,2),(69,'2018-04-13 09:44:09','',5,2),(70,'2018-04-13 09:55:31','',5,2),(71,'2018-04-13 10:11:32','',5,2),(72,'2018-04-13 10:11:32','\0',14,2),(73,'2018-04-13 10:11:32','\0',15,2),(74,'2018-04-13 10:14:00','',14,2),(75,'2018-04-13 10:14:00','\0',15,2),(76,'2018-04-13 10:14:00','',5,2),(77,'2018-04-13 10:19:34','',18,2),(78,'2018-04-13 10:19:34','\0',19,2);
 /*!40000 ALTER TABLE `statistic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,7 +198,7 @@ CREATE TABLE `test` (
   UNIQUE KEY `testId_UNIQUE` (`testId`),
   KEY `topicId_idx` (`topicId`),
   CONSTRAINT `topicId` FOREIGN KEY (`topicId`) REFERENCES `topic` (`topicId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -209,7 +207,7 @@ CREATE TABLE `test` (
 
 LOCK TABLES `test` WRITE;
 /*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` VALUES (1,'Collections','Test about Collections.',1,'\0'),(2,'POSIX','POSIX',2,'\0');
+INSERT INTO `test` VALUES (1,'Collections','Test about Collections in Java.',1,'\0'),(2,'POSIX','POSIX',2,'\0'),(3,'Exceptions','About exceptions in C#.',3,'\0'),(4,'JDBC','dfgh',1,'\0');
 /*!40000 ALTER TABLE `test` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +225,7 @@ CREATE TABLE `topic` (
   `isDeleted` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`topicId`),
   UNIQUE KEY `topicId_UNIQUE` (`topicId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +234,7 @@ CREATE TABLE `topic` (
 
 LOCK TABLES `topic` WRITE;
 /*!40000 ALTER TABLE `topic` DISABLE KEYS */;
-INSERT INTO `topic` VALUES (1,'Test about Java.','Java','\0'),(2,'Tests about c++.','C++','\0');
+INSERT INTO `topic` VALUES (1,'Test about Java.','Java','\0'),(2,'Tests about c++.','C++','\0'),(3,'About C#','C#','\0');
 /*!40000 ALTER TABLE `topic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -259,7 +257,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `roleId_idx` (`roleId`),
   CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +266,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Anton','Shtabnoy','admin','$2a$10$b7ETijrdO6hkYSTZmgjBiuPLuJQYn4kwxKZelyQadeQWGKe0BwCNW',1,'\0'),(2,'Maxim','Zhykovsku','user','$2a$10$uAUdbabp1tIv8KyvpwF0P.Yb/Py4xb/TeEpaAGu2YNqOxdkIjjdT.',3,'\0'),(8,'Vika','Azarenka','Aza','$2a$10$EQqeRlQcahXWv5Md2NuVRetkZXTab/WJbTN6C6rTKZvALUKEhrXZq',3,'\0'),(9,'Brain','Wilson','user2','$2a$10$6fwEiMrMcoSqO9kYm5eeQenfSF0waq6uj4h2u5xTEnmrdz4Watgy.',3,''),(10,'Luba','Dobrushevich','tutor','$2a$10$SVKz1G0mnX4ZXTysY8p39eC9lk.GwO..VEJtzmTQaWPYO7H2GLl3q',2,'\0');
+INSERT INTO `user` VALUES (1,'Anton','Shtabnoy','admin','$2a$10$b7ETijrdO6hkYSTZmgjBiuPLuJQYn4kwxKZelyQadeQWGKe0BwCNW',1,'\0'),(2,'Maxim','Zhykovsku','user','$2a$10$uAUdbabp1tIv8KyvpwF0P.Yb/Py4xb/TeEpaAGu2YNqOxdkIjjdT.',3,'\0'),(8,'Vika','Azarenka','Aza','$2a$10$EQqeRlQcahXWv5Md2NuVRetkZXTab/WJbTN6C6rTKZvALUKEhrXZq',3,'\0'),(9,'Brain','Wilson','user2','$2a$10$6fwEiMrMcoSqO9kYm5eeQenfSF0waq6uj4h2u5xTEnmrdz4Watgy.',3,''),(10,'Luba','Dobrushevich','tutor','$2a$10$SVKz1G0mnX4ZXTysY8p39eC9lk.GwO..VEJtzmTQaWPYO7H2GLl3q',2,'\0'),(11,'Liza','Vinnikova','liza1','$2a$10$YWit5Iu9URM3V9xhsElh.edxVfD1G21ATw4QJHyS1QVEb04daEiNW',3,'\0'),(12,'Katya','Melnikova','kate1','$2a$10$Q4Cxgue9VDAdacevLjgWiuo9HL3/cQgPRcmTniVhuJeGH7CNQs/zW',2,'\0'),(13,'Anna','Kozlova','teacher','$2a$10$eMZNttSNSjSqWAGdzhOUG.tbpNR60fhvCo.StjoJzldxnzz8UURgi',2,'\0');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -281,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-06 14:05:28
+-- Dump completed on 2018-04-13 13:21:53
