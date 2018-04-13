@@ -98,6 +98,107 @@ CREATE TABLE `link` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_question_statistics`()
+BEGIN
+
+select test.name, q.description, count(*),
+count(case when s.isCorrect = 1 then 1 end)/count(*)*100 from statistic as s join question as q on q.questionId=s.questionId
+ join test on test.testId = q.testId group by q.questionId;
+
+
+END;
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_test_statistics`()
+BEGIN
+
+select t.name, count(*), count(case when s.isCorrect=1 then 1 end)/count(*)*100 from statistic as s join question as q
+on q.questionId=s.questionId join test as t on q.testId=t.testId
+where s.questionId = (select questionId from question join test on test.testId = question.testId where test.testId=t.testId limit 1)
+group by (select questionId from question join test on test.testId = question.testId where test.testId=t.testId limit 1);
+
+END;
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `admin_user_statistics`()
+BEGIN
+
+select user.lastName, t.name, count(0), count(case when s.isCorrect=1 then 1 end)/count(0)*100 from statistic as s join question as q
+on q.questionId=s.questionId join test as t on q.testId=t.testId join user on user.userId = s.userId
+group by s.userId, q.testId;
+
+
+END;
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isCorrect`(in id INT)
+BEGIN
+   DECLARE isCor bit(1);
+
+Select isCorrect from answer as a where a.answerId = id  into isCor;
+ #IF isCor = 1 then set result = 1;
+ #ELSEIF isCor = 0 then set result = 0;
+ #END IF;
+ select isCor;
+END;
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tutor_question_statistics`()
+BEGIN
+
+select test.name, q.description,
+count(case when s.isCorrect = 1 then 1 end), count(*)-count(case when s.isCorrect = 1 then 1 end)
+ from statistic as s join question as q on q.questionId=s.questionId
+ join test on test.testId = q.testId group by q.questionId;
+
+
+END;
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tutor_test_statistics`()
+BEGIN
+
+
+select t.name, count(case when s.isCorrect=1 then 1 end), count(*)-count(case when s.isCorrect=1 then 1 end) from statistic as s join question as q
+on q.questionId=s.questionId join test as t on q.testId=t.testId
+where s.questionId = (select questionId from question join test on test.testId = question.testId where test.testId=t.testId limit 1)
+group by (select questionId from question join test on test.testId = question.testId where test.testId=t.testId limit 1);
+
+
+
+
+END;
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `tutor_user_statistics`()
+BEGIN
+
+select user.lastName, t.name, count(case when s.isCorrect=1 then 1 end),
+count(0)-count(case when s.isCorrect=1 then 1 end)
+ from statistic as s join question as q
+on q.questionId=s.questionId join test as t on q.testId=t.testId join user on user.userId = s.userId
+group by s.userId, q.testId;
+
+
+END;
+
+
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `user_statistics`(in userIdParam int)
+BEGIN
+
+select test.name, q.description, count(*),
+count(case when s.isCorrect = 1 then 1 end)/count(*)*100 from statistic as s join question as q on q.questionId=s.questionId
+ join test on test.testId = q.testId
+ join user on s.userId = user.userId where user.userId = userIdParam group by q.questionId;
+
+END;
+
+
+
 
 
 
