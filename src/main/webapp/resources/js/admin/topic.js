@@ -18,7 +18,6 @@ $(document).ready(function() {
         $("input[name='topics-check']:checked").each(function() {
             names.push($(this).val());
         });
-        alert(names);
     });
     $('#delete-topic').click(function () {
         var token = $("meta[name='_csrf']").attr("content");
@@ -27,10 +26,10 @@ $(document).ready(function() {
             xhr.setRequestHeader(header, token);
         });
         $.ajax({
-            url: '/admin/topic/' + names,
+            url: window.location.pathname + names,
             type: 'DELETE',
             success: function () {
-                $("#topics_table_container").load("http://localhost:8080/admin/topic #topics_table");
+                $("#topics_table_container").load(window.location.pathname + " #topics_table");
             }
         })
         ;

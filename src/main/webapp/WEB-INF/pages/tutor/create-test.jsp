@@ -11,11 +11,13 @@
 
 <c:choose>
     <c:when test="${empty test.name}">
-        <c:set var="formAction" value="/tutor/tests/create" />
+        <c:url var="formAction" value="/tutor/tests/create"/>
+        <%--<c:set var="formAction" value="/tutor/tests/create" />--%>
         <c:set var="button" value="Add" />
     </c:when>
     <c:otherwise>
-        <c:set var="formAction" value="/tutor/tests/${test.id}" />
+        <c:url var="formAction" value="/tutor/tests/${test.id}"/>
+        <%--<c:set var="formAction" value="/tutor/tests/${test.id}" />--%>
         <c:set var="button" value="Edit"/>
     </c:otherwise>
 </c:choose>
@@ -24,7 +26,6 @@
     <div class="row main">
         <div class="main-login main-center">
             <form:form method="post" action="${formAction}" modelAttribute="test">
-
                 <c:if test="${empty test.name}">
                     <div class="form-group">
                         <form:label path="topic" class="cols-sm-2 control-label">Topic</form:label>

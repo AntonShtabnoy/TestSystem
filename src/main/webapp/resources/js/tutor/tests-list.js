@@ -27,10 +27,10 @@ $(document).ready(function() {
             xhr.setRequestHeader(header, token);
         });
         $.ajax({
-            url: '/tutor/test/' + names,
+            url: window.location.pathname + names,
             type: 'DELETE',
             success: function () {
-                $("#tests_table_container").load("http://localhost:8080/tutor/test #tests_table");
+                $("#tests_table_container").load(window.location.pathname + " #tests_table");
             }
         })
         ;

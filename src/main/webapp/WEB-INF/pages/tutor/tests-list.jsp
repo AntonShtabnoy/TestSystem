@@ -31,7 +31,9 @@
         </tbody>
     </table>
 </div>
-<button name="add-test" type="button" class="btn btn-primary" onclick="window.location.href='/tutor/tests/create'">Add</button>
+<button name="add-test" type="button" class="btn btn-primary"
+        onclick="window.location.href=window.location.pathname+'tests/create'">Add
+</button>
 <button id="delete-test" type="button" class="btn btn-primary">Delete</button>
 
 

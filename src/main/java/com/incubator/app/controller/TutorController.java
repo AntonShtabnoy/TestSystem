@@ -84,9 +84,10 @@ public class TutorController {
     }
 
     @RequestMapping(value = {"/tests/{ids}"}, method = RequestMethod.DELETE)
-    public ResponseEntity deleteTests(@PathVariable("ids") long[] ids){
+    public @ResponseBody
+    String deleteTests(@PathVariable("ids") long[] ids) {
         testService.deleteAll(ids);
-        return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = {"/questions/{id}"}, method = RequestMethod.GET)
@@ -117,7 +118,7 @@ public class TutorController {
 
     @RequestMapping(value = {"/questions/create/{id}"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody
-    String saveQuestion(@PathVariable("id") long id, @RequestBody QuestionDTO name) {
+    String saveQuestion(@PathVariable("id") long id, @RequestBody QuestionDTO questionDTO) {
         Question question = new Question();
         Test test = new Test();
         Answer answer = new Answer();
@@ -128,26 +129,30 @@ public class TutorController {
         Set<Link> links = new HashSet<>();
         Literature lit = new Literature();
         Link link = new Link();
-        link.setLink(name.getLink());
+        link.setLink(questionDTO.getLink());
         link.setLiterature(lit);
         links.add(link);
         lit.setQuestion(question);
-        lit.setDescription(name.getLiterature());
+        lit.setDescription(questionDTO.getLiterature());
         lit.setLinks(links);
         literature.add(lit);
-        for (int i = 0; i < name.getAnswers().size(); i++) {
+        int j = 0;
+        for (int i = 0; i < questionDTO.getAnswers().size(); i++) {
             answer = new Answer();
-            answer.setDescription(name.getAnswers().get(i));
+            answer.setDescription(questionDTO.getAnswers().get(i));
             answer.setIsCorrect(0);
-            if (i < name.getCorrect().size()) {
-                if (Integer.valueOf(name.getCorrect().get(i)) == i) {
+            //System.out.println(questionDTO.getCorrect().size());
+            if (j < questionDTO.getCorrect().size()) {
+                //System.out.println(Integer.valueOf(questionDTO.getCorrect().get(i)));
+                if (Integer.valueOf(questionDTO.getCorrect().get(j)) == i) {
                     answer.setIsCorrect(1);
+                    j++;
                 }
             }
             answer.setQuestion(question);
             answers.add(answer);
         }
-        question.setDescription(name.getDescription());
+        question.setDescription(questionDTO.getDescription());
         question.setAnswers(answers);
         question.setIsDeleted(0);
         question.setLiteratureList(literature);

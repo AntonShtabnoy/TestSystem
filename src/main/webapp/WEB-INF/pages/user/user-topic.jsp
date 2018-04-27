@@ -17,7 +17,7 @@
         <div class="span4">
             <img style="float:left; margin-left: 25%" src="<c:url value="/resources/image/image1.png"/>"/>
         </div>
-        <form method="post" action="/user/tests" id="formId">
+        <form method="post" action="<c:url value="/user/tests"/>" id="formId">
             <div class="user-main container">
                 <select class="selectpicker" name="topic" id="topicId" data-style="btn-info" data-live-search="true">
                     <c:forEach var="topic" items="${topics}">

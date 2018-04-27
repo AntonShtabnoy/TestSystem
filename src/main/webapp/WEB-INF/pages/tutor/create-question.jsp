@@ -13,11 +13,13 @@
 
 <c:choose>
     <c:when test="${empty test.name}">
-        <c:set var="formAction" value="/tutor/tests/create"/>
+        <%--<c:set var="formAction" value="/tutor/tests/create"/>--%>
+        <c:url var="formAction" value="/tutor/tests/create"/>
         <c:set var="button" value="Add question"/>
     </c:when>
     <c:otherwise>
-        <c:set var="formAction" value="/tutor/tests/${test.id}"/>
+        <c:url var="formAction" value="/tutor/tests/${test.id}"/>
+        <%--<c:set var="formAction" value="/tutor/tests/${test.id}"/>--%>
         <c:set var="button" value="Edit"/>
     </c:otherwise>
 </c:choose>

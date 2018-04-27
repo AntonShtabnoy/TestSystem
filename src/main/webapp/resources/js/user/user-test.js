@@ -13,8 +13,13 @@ $(document).ready(function () {
         if (indexOfQuestion >= count) {
             let answers = {"answers": map};
             console.log(answers);
+            var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            $(document).ajaxSend(function (e, xhr, options) {
+                xhr.setRequestHeader(header, token);
+            });
             $.ajax({
-                url: '/user/questions',
+                url: window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/questions",
                 type: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -24,8 +29,8 @@ $(document).ready(function () {
                 contentType: "application/json; charset=utf-8",
                 data: JSON.stringify(answers),
                 success: function () {
-                    console.log("All were sent");
-                    window.location.href = "/user/statistics";
+                    console.log("All were sent" + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/user/statistics");
+                    window.location.href = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/statistics";
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     console.log(xhr.status);
@@ -49,14 +54,16 @@ $(document).ready(function () {
         //     data: JSON.stringify(data),
         //     success: function () {
         //         console.log("All were sent");
-        $('#mainId').load("http://localhost:8080/user/questions/" + nextQuestion + " #mainId");
+        indexOfQuestion++;
+        // if(indexOfQuestion < count) {
+        $('#mainId').load(window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/questions" + "/" + nextQuestion + " #mainId");
         nextQuestion++;
+        // }
         //     },
         //     error: function (xhr, ajaxOptions, thrownError) {
         //         console.log(xhr.status);
         //     }
         // });
-        indexOfQuestion++;
         console.log(map);
     });
     $(document).on("click", "#finishId", function () {
@@ -67,8 +74,13 @@ $(document).ready(function () {
         radioMap = [];
         let answers = {"answers": map};
         console.log(answers);
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $(document).ajaxSend(function (e, xhr, options) {
+            xhr.setRequestHeader(header, token);
+        });
         $.ajax({
-            url: '/user/questions',
+            url: window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/questions",
             type: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -79,7 +91,7 @@ $(document).ready(function () {
             data: JSON.stringify(answers),
             success: function () {
                 console.log("All were sent");
-                window.location.href = "/user/statistics";
+                window.location.href = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/statistics";
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 console.log(xhr.status);

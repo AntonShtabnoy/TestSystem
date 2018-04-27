@@ -7,7 +7,8 @@ $(document).ready(function () {
         $(document).ajaxSend(function (e, xhr, options) {
             xhr.setRequestHeader(header, token);
         });
-        $('#tests_container').load("http://localhost:8080/user/tests/" + data + " #tests_container");
+        console.log(window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/tests/" + data);
+        $('#tests_container').load(window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/tests/" + data + " #tests_container");
         $('.selectpicker').selectpicker('refresh');
         // $.ajax({
         //     url: '/user/tests/' + $('#questionId').val(),

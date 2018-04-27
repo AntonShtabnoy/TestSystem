@@ -12,12 +12,14 @@
 
 <c:choose>
     <c:when test="${empty user.login}">
-        <c:set var="formAction" value="/admin/create" />
+        <c:url var="formAction" value="/admin/create"/>
+        <%--<c:set var="formAction" value="/admin/create" />--%>
         <c:set var="password" value="Enter your password" />
         <c:set var="button" value="Register" />
     </c:when>
     <c:otherwise>
-        <c:set var="formAction" value="/admin/${user.id}" />
+        <%--<c:set var="formAction" value="/admin/${user.id}" />--%>
+        <c:url var="formAction" value="/admin/${user.id}"/>
         <c:set var="password" value="Enter new password" />
         <c:set var="button" value="Edit"/>
     </c:otherwise>
@@ -28,7 +30,7 @@
         <div class="main-login main-center">
                 <form:form method="post" action="${formAction}" modelAttribute="user">
                 <div class="form-group">
-                    <form:label path="firstName" class="cols-sm-2 control-label">Your Name</form:label>
+                    <form:label path="firstName" class="cols-sm-2 control-label">Your Name*</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -38,7 +40,7 @@
                 </div>
 
                 <div class="form-group">
-                    <form:label path="lastName" class="cols-sm-2 control-label">Your Surname</form:label>
+                    <form:label path="lastName" class="cols-sm-2 control-label">Your Surname*</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
@@ -48,7 +50,7 @@
                 </div>
 
                 <div class="form-group">
-                    <form:label path="login" class="cols-sm-2 control-label">Username</form:label>
+                    <form:label path="login" class="cols-sm-2 control-label">Username*</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-users fa" aria-hidden="true"></i></span>
@@ -58,7 +60,7 @@
                 </div>
                     <c:if test="${empty user.login}">
                     <div class="form-group">
-                    <form:label path="password" class="cols-sm-2 control-label">Password</form:label>
+                        <form:label path="password" class="cols-sm-2 control-label">Password*</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
@@ -68,7 +70,7 @@
                 </div>
                     </c:if>
                 <div class="form-group">
-                    <form:label path="role.name" class="cols-sm-2 control-label">Role</form:label>
+                    <form:label path="role.name" class="cols-sm-2 control-label">Role*</form:label>
                     <div class="cols-sm-10">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="fa fa-group fa-lg" aria-hidden="true"></i></span>

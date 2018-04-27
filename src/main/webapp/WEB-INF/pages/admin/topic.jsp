@@ -28,7 +28,10 @@
         </tbody>
     </table>
 </div>
-<button name="add-topic" type="button" class="btn btn-primary" onclick="window.location.href='/admin/topics/create'">Add</button>
+<%--/admin/topics/create--%>
+<button name="add-topic" type="button" class="btn btn-primary"
+        onclick="window.location.href=window.location.pathname+'/create'">Add
+</button>
 <button id="delete-topic" type="button" class="btn btn-primary">Delete</button>
 
 

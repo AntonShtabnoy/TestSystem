@@ -111,15 +111,17 @@ public class AdminController {
     }
 
     @RequestMapping(value = {"/{ids}"}, method = RequestMethod.DELETE)
-    public ResponseEntity delete(@PathVariable("ids") long[] ids){
+    public @ResponseBody
+    String delete(@PathVariable("ids") long[] ids) {
         userService.deleteAll(ids);
-        return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = {"/topics/{ids}"}, method = RequestMethod.DELETE)
-    public ResponseEntity deleteTopoics(@PathVariable("ids") long[] ids){
+    public @ResponseBody
+    String deleteTopoics(@PathVariable("ids") long[] ids) {
         topicService.deleteAll(ids);
-        return new ResponseEntity<Topic>(HttpStatus.NO_CONTENT);
+        return "{\"msg\":\"success\"}";
     }
 
     @RequestMapping(value = {"/topics"}, method = RequestMethod.GET)

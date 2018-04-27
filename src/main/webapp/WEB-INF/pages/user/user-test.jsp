@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </div>
-            <form method="post" action="/user/t" id="formId">
+            <%--<form method="post" action="/user/t" id="formId">--%>
                 <div class="form-group ">
                     <div class="row">
                         <div class="col-md-6">
@@ -61,7 +61,7 @@
                 </div>
                 <input type="hidden" name="${_csrf.parameterName}"
                        value="${_csrf.token}"/>
-            </form>
+            <%--</form>--%>
         </div>
     </div>
 </div>

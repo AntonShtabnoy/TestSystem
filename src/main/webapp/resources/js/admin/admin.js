@@ -18,7 +18,6 @@ $(document).ready(function() {
         $("input[name='users-check']:checked").each(function() {
             names.push($(this).val());
         });
-        alert(names);
     });
     $('#delete-user').click(function () {
         var token = $("meta[name='_csrf']").attr("content");
@@ -27,10 +26,10 @@ $(document).ready(function() {
             xhr.setRequestHeader(header, token);
         });
         $.ajax({
-            url: '/admin/' + names,
+            url: window.location.pathname + names,
             type: 'DELETE',
             success: function () {
-                $("#users_table_container").load("http://localhost:8080/admin #example");
+                $("#users_table_container").load(window.location.pathname + " #example");
             }
         })
         ;

@@ -7,10 +7,10 @@ $(document).ready(function () {
             xhr.setRequestHeader(header, token);
         });
         $.ajax({
-            url: '/tutor/questions/' + selectTest,
+            url: window.location.pathname + selectTest,
             type: 'PUT',
             success: function () {
-                $("#questions_table_container").load("http://localhost:8080/tutor/questions/" + selectTest + " #questions_table");
+                $("#questions_table_container").load(window.location.pathname + selectTest + " #questions_table");
             }
         })
         ;
@@ -19,5 +19,6 @@ $(document).ready(function () {
 
 function addURL() {
     let select = $('#pickerId').val();
-    return window.location.href = '/tutor/questions/create/' + select;
+    console.log(window.location.pathname + 'create/' + select);
+    return window.location.href = window.location.pathname.substring(0, window.location.pathname.length - 1) + 'create/' + select;
 }

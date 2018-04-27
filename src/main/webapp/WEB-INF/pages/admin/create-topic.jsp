@@ -9,13 +9,16 @@
 </head>
 <body>
 
+
 <c:choose>
     <c:when test="${empty topic.name}">
-        <c:set var="formAction" value="/admin/topics/create" />
+        <%--<c:set var="formAction" value="/admin/topics/create"/>--%>
+        <c:url var="formAction" value="/admin/topics/create"/>
         <c:set var="button" value="Add" />
     </c:when>
     <c:otherwise>
-        <c:set var="formAction" value="/admin/topics/${topic.id}" />
+        <c:url var="formAction" value="/admin/topics/${topic.id}"/>
+        <%--<c:set var="formAction" value="/admin/topics/${topic.id}" />--%>
         <c:set var="button" value="Edit"/>
     </c:otherwise>
 </c:choose>

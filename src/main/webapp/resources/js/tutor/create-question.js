@@ -2,11 +2,12 @@ $(document).ready(function () {
     let wrapper = $(".col-lg-12");
     let add_button = $("#add_answer");
     var radioIndex = 3;
+    var checkOrRadio = 'radio';
 
     function addAnswer() {
         return '<div class="input-group">\n' +
             '<span class="input-group-addon">\n' +
-            '<input type="radio" value="' + radioIndex + '" name="radio-group" aria-label="Checkbox for following text input">\n' +
+            '<input type="' + checkOrRadio + '" value="' + radioIndex + '" name="radio-group" aria-label="Checkbox for following text input">\n' +
             '</span>\n' +
             ' <textarea  rows="2" name="text_answer" class="form-control" aria-label="Text input with checkbox"></textarea>\n' +
             ' </div>';
@@ -66,7 +67,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: '/tutor/questions/create/' + siteCode,
+            url: window.location.pathname.substring(0, window.location.pathname.length - 1) + siteCode,
             type: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -97,13 +98,15 @@ $(document).ready(function () {
     });
 
     $('#finishId').click(function () {
-        location.href = "/tutor/questions/0";
+        location.href = window.location.pathname.substring(0, window.location.pathname.length - 1) + '0';
     });
     $('#type').change(function () {
         if ($('#type').val() === 'single') {
             $(':checkbox').attr('type', 'radio');
+            checkOrRadio = 'radio';
         } else {
             $(':radio').attr('type', 'checkbox');
+            checkOrRadio = 'checkbox';
         }
     });
 });
